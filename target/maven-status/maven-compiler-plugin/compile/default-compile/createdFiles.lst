@@ -1,0 +1,13 @@
+project/water/watermap/objects/WaterSourceDTO.class
+project/water/watermap/objects/WaterMeasurementDTO.class
+project/water/watermap/controller/DataController.class
+project/water/watermap/exceptions/WaterPointNotFoundException.class
+project/water/watermap/objects/DataResponse.class
+project/water/watermap/repositories/RestRepositoryConfigurator.class
+project/water/watermap/repositories/WaterSourceRepository.class
+project/water/watermap/controller/DataController$FailReasons.class
+project/water/watermap/WaterMapApplication.class
+project/water/watermap/model/WaterMeasurement.class
+project/water/watermap/model/WaterSource.class
+project/water/watermap/repositories/WaterMeasurementRepository.class
+project/water/watermap/model/AuditModel.class
