@@ -8,11 +8,11 @@
 		<version>2.2.2.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>project.water</groupId>
-	<artifactId>water-map</artifactId>
+	<groupId>project.bartlett</groupId>
+	<artifactId>stuff-ranker</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>water-map</name>
-	<description>Demo project for Spring Boot</description>
+	<name>stuff-ranker</name>
+	<description>Backend for ranking stuff</description>
 
 	<properties>
 		<java.version>1.8</java.version>

@@ -1,0 +1,10 @@
+<div>
+  <label
+    >Category name:
+    <input #categoryName />
+  </label>
+  <!-- (click) passes input value to add() and then clears the input -->
+  <button (click)="add(categoryName.value); categoryName.value = ''">
+    add
+  </button>
+</div>
