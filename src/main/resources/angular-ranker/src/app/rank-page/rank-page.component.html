@@ -1,0 +1,17 @@
+<h3>Ranking {{ category.name }}</h3>
+<div class="grid grid-pad">
+  <a
+    *ngFor="let optionScore of displayOptions"
+    class="col-6"
+    role="button"
+    (click)="selectOption(optionScore)"
+  >
+    <div class="module option">
+      <h4>{{ optionScore.option.name }}</h4>
+    </div>
+  </a>
+  <div *ngIf="finishedRanking">
+    <p>All done!</p>
+    <button (click)="saveAndSeeResults()">Save and see results</button>
+  </div>
+</div>

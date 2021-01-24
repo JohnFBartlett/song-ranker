@@ -10,6 +10,11 @@ import { MessagesComponent } from './messages/messages.component';
 import { AppRoutingModule } from './app-routing/app-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { CreateCategoryComponent } from './create-category/create-category.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { RankPageComponent } from './rank-page/rank-page.component';
+import { RankResultsComponent } from './rank-results/rank-results.component';
+import { ArraySortByPipe } from './pipes/SortBy';
+import { CategorySummaryComponent } from './category-summary/category-summary.component';
 
 @NgModule({
   declarations: [
@@ -19,8 +24,18 @@ import { CreateCategoryComponent } from './create-category/create-category.compo
     MessagesComponent,
     DashboardComponent,
     CreateCategoryComponent,
+    RankPageComponent,
+    RankResultsComponent,
+    ArraySortByPipe,
+    CategorySummaryComponent,
   ],
-  imports: [BrowserModule, FormsModule, AppRoutingModule, HttpClientModule],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    AppRoutingModule,
+    HttpClientModule,
+    NgbModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

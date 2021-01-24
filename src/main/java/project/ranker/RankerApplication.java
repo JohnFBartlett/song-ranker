@@ -32,28 +32,28 @@ public class RankerApplication {
 	}
 	
 	// Bootstrap some test data into the in-memory database
-    @Bean
-    ApplicationRunner init(
-    		CategoryRepository categoryRepository,
-    		OptionRepository optionRepository
-    		) {
-    	Category category = new Category();
-        category.setName("TestCategory");
-        
-        categoryRepository.save(category);
-        return args -> {
-            Stream.of("FirstOption", "SecondOption", "ThirdOption", "FourthOption")
-            .forEach(name -> {
-                    
-                    
-                    Option option = new Option();
-                    option.setCategory(category);
-                    option.setName(name);
-                    optionRepository.save(option);
-            });  
-            optionRepository.findAll().forEach(System.out::println);  
-        };  
-    }  
+//    @Bean
+//    ApplicationRunner init(
+//    		CategoryRepository categoryRepository,
+//    		OptionRepository optionRepository
+//    		) {
+//    	Category category = new Category();
+//        category.setName("TestCategory");
+//        
+//        categoryRepository.save(category);
+//        return args -> {
+//            Stream.of("FirstOption", "SecondOption", "ThirdOption", "FourthOption")
+//            .forEach(name -> {
+//                    
+//                    
+//                    Option option = new Option();
+//                    option.setCategory(category);
+//                    option.setName(name);
+//                    optionRepository.save(option);
+//            });  
+//            optionRepository.findAll().forEach(System.out::println);  
+//        };  
+//    }  
 
     // Fix the CORS errors
     @Bean
@@ -68,6 +68,8 @@ public class RankerApplication {
         				"https://localhost",
         				"http://localhost:8080",
         				"http://127.0.0.1:8080",
+        				"http://localhost:4200",
+        				"http://127.0.0.1:4200",
         				"http://localhost:80",
         				"http://127.0.0.1:80",
         				"http://localhost:443",

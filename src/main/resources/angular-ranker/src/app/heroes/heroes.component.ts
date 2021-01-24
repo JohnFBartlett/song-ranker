@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Hero } from '../models/hero';
+import { Option } from '../models/option';
 import { HeroService } from '../services/hero.service';
 
 @Component({
@@ -8,15 +8,17 @@ import { HeroService } from '../services/hero.service';
   styleUrls: ['./heroes.component.css'],
 })
 export class HeroesComponent implements OnInit {
-  heroes: Hero[] | undefined;
+  heroes: Option[] | undefined;
 
   constructor(private heroService: HeroService) {}
 
   ngOnInit() {
-    this.getHeroes();
+    this.getCategories();
   }
 
-  getHeroes(): void {
-    this.heroService.getHeroes().subscribe((heroes) => (this.heroes = heroes));
+  getCategories(): void {
+    this.heroService
+      .getCategories()
+      .subscribe((heroes) => (this.heroes = heroes));
   }
 }

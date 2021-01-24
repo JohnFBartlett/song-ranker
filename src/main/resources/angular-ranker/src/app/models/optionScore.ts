@@ -1,9 +1,10 @@
 import { Option } from './option';
 
-export interface Category {
+export interface OptionScore {
   id?: number;
-  name: string;
   createdAt?: Date;
   updatedAt?: Date;
-  options: Option[];
+  option: Option;
+  timesRanked: number;
+  score: number;
 }

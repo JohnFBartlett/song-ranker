@@ -17,7 +17,7 @@ export class CreateCategoryComponent implements OnInit {
     if (!name) {
       return;
     }
-    const category: Category = { name: name, heroes: [] };
+    const category: Category = { name: name, options: [] };
     this.heroService.createCategory(category);
   }
 }

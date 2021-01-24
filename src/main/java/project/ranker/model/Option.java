@@ -27,7 +27,7 @@ public class Option extends AuditModel {
 	
 	@ManyToOne
 	@JoinColumn(name="category_id", nullable=false)
-	@JsonBackReference
+	@JsonBackReference(value="categoryOptions")
 	private Category category;
 	
 	@Column

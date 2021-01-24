@@ -41,7 +41,7 @@ public class Category extends AuditModel {
 	@OneToMany(
 		mappedBy="category",
 		cascade=CascadeType.ALL)
-	@JsonManagedReference
+	@JsonManagedReference(value="categoryOptions")
 	private List<Option> options;
 
 	public Long getId() {

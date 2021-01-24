@@ -4,9 +4,9 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { MessageService } from './message.service';
-import { Hero } from '../models/hero';
-import { HEROES } from '../data/mock-heroes';
+import { Option } from '../models/option';
 import { Category } from '../models/category';
+import { RankSession } from '../models/rankSession';
 
 @Injectable({
   providedIn: 'root',
@@ -23,6 +23,7 @@ export class HeroService {
 
   private categoriesUrl = 'http://127.0.0.1:9000/data/categories'; // URL to web api
   private optionsUrl = 'http://127.0.0.1:9000/data/options'; // URL to web api
+  private rankUrl = 'http://127.0.0.1:9000/ranking';
 
   /** Log a HeroService message with the MessageService */
   private log(message: string) {
@@ -49,6 +50,7 @@ export class HeroService {
   }
 
   getCategories(): Observable<Category[]> {
+    this.log('hi');
     return this.http.get<Category[]>(this.categoriesUrl).pipe(
       tap((_) => this.log('fetched categories')),
       catchError(this.handleError<Category[]>('getCategories', []))
@@ -56,7 +58,7 @@ export class HeroService {
   }
 
   /** GET heroes from the server */
-  getCategory(id?: 1000): Observable<Category> {
+  getCategory(id: number): Observable<Category> {
     return this.http.get<Category>(`${this.categoriesUrl}/${id}`).pipe(
       tap((_) => this.log('fetched category')),
       catchError(this.handleError<Category>('getCategory'))
@@ -72,10 +74,36 @@ export class HeroService {
   }
 
   /** PUT: update the hero on the server */
-  updateOption(hero: Hero): Observable<any> {
+  updateOption(hero: Option): Observable<any> {
     return this.http.put(this.optionsUrl, hero, this.httpOptions).pipe(
       tap((_) => this.log(`updated option id=${hero.id}`)),
       catchError(this.handleError<any>('updateOption'))
+    );
+  }
+
+  /** PUT: update the hero on the server */
+  updateCategory(category: Category): Observable<any> {
+    return this.http.put(this.optionsUrl, category, this.httpOptions).pipe(
+      tap((_) => this.log(`updated option id=${category.id}`)),
+      catchError(this.handleError<any>('updateOption'))
+    );
+  }
+
+  submitRankSession(rankSession: RankSession): Observable<RankSession> {
+    return this.http
+      .post<RankSession>(this.rankUrl, rankSession, this.httpOptions)
+      .pipe(
+        tap((savedSession) =>
+          this.log(`created session id=${savedSession.id}`)
+        ),
+        catchError(this.handleError<RankSession>('submitRankSession'))
+      );
+  }
+
+  getRankSession(id: number): Observable<RankSession> {
+    return this.http.get<RankSession>(`${this.rankUrl}/${id}`).pipe(
+      tap((_) => this.log('fetched rank session')),
+      catchError(this.handleError<RankSession>('getRankSession'))
     );
   }
 }

@@ -12,6 +12,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @SuppressWarnings("serial")
 @Entity
@@ -29,25 +30,22 @@ public class OptionScore extends AuditModel {
 	
 	@ManyToOne
 	@JoinColumn(name="option_id", nullable=false)
-	@JsonBackReference
+	@JsonManagedReference(value="optionScoreOption")
 	private Option option;
+	
+	@ManyToOne
+	@JoinColumn(name="rank_session_id", nullable=false)
+	@JsonBackReference(value="optionScoreRankSession")
+	private RankSession rankSession;
 	
 	@Column
 	private Double score;
 	
 	@Column
-	private Date dateCollected;
+	private Integer timesRanked;
 
 	public Long getId() {
 		return id;
-	}
-	
-	public Date getDateCollected() {
-		return dateCollected;
-	}
-
-	public void setDateCollected(Date dateCollected) {
-		this.dateCollected = dateCollected;
 	}
 
 	public Option getOption() {
@@ -58,11 +56,27 @@ public class OptionScore extends AuditModel {
 		this.option = option;
 	}
 
+	public RankSession getRankSession() {
+		return rankSession;
+	}
+
+	public void setRankSession(RankSession rankSession) {
+		this.rankSession = rankSession;
+	}
+
 	public Double getScore() {
 		return score;
 	}
 
 	public void setScore(Double score) {
 		this.score = score;
+	}
+
+	public Integer getTimesRanked() {
+		return timesRanked;
+	}
+
+	public void setTimesRanked(Integer timesRanked) {
+		this.timesRanked = timesRanked;
 	}
 }

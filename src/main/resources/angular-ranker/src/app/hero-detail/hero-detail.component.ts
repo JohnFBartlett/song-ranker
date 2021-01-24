@@ -4,7 +4,8 @@ import { Location } from '@angular/common';
 
 import { HeroService } from '../services/hero.service';
 
-import { Hero } from '../models/hero';
+import { Option } from '../models/option';
+import { Category } from '../models/category';
 
 @Component({
   selector: 'app-hero-detail',
@@ -12,7 +13,8 @@ import { Hero } from '../models/hero';
   styleUrls: ['./hero-detail.component.css'],
 })
 export class HeroDetailComponent implements OnInit {
-  hero: Hero | undefined;
+  category: Category | undefined;
+  hero: Option = { name: 'choice1' };
 
   constructor(
     private route: ActivatedRoute,
@@ -27,7 +29,9 @@ export class HeroDetailComponent implements OnInit {
   getHero(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.heroService.getHero(+id).subscribe((hero) => (this.hero = hero));
+      this.heroService
+        .getCategory(+id)
+        .subscribe((hero) => (this.category = hero));
     }
   }
 
@@ -36,6 +40,6 @@ export class HeroDetailComponent implements OnInit {
   }
 
   save(): void {
-    this.heroService.updateHero(this.hero).subscribe(() => this.goBack());
+    this.heroService.updateOption(this.hero).subscribe(() => this.goBack());
   }
 }

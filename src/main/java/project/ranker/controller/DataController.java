@@ -42,6 +42,8 @@ public class DataController {
 	
 	final static String DATA_SUCCESS = "Successfully added data to the DB.";
 	final static String DATA_FAIL = "Failed to add data to the DB";
+	final static String DELETE_SUCCESS = "Successfully deleted data from the DB";
+	final static String DELETE_FAIL = "Failed to delete data from the DB";
 	
 	private String delete_success(long id) {
 		return String.format("Successfully deleted category %d from the DB", id);
@@ -49,6 +51,10 @@ public class DataController {
 	
 	private String delete_not_found(long id) {
 		return String.format("Could not find category %d to delete", id);
+	}
+	
+	private String nothing_found() {
+		return "Could not find any categories to delete";
 	}
 	
 	private String delete_failed(long id) {
@@ -97,32 +103,32 @@ public class DataController {
 		return new ResponseEntity<>(created, HttpStatus.OK);
 	}
 
-	@PostMapping(path = "/categories", produces = "application/json")
-	public DataResponse addData(@RequestBody List<Category> categories) {
-		
-		for (Category category : categories) {
-			System.out.println(category.toString());
-			linkCategory(category, category.getOptions());
-		}
-		
-		List<Category> created = categoryRepository.saveAll(categories);
-		int numCreated = created.size();
-		int updated = 0;
-		
-		List<Long> ids = new ArrayList<>();
-		for (Category category: created) {
-			ids.add(category.getId());
-		}
-		
-		DataResponse response = new DataResponse();
-		response.setNumSaved(numCreated);
-		response.setNumUpdated(updated);
-		response.setCreatedIds(ids);
-		response.setNumRejected(0);
-		response.setResponseStatus(DATA_SUCCESS);
-		
-		return response;
-	}
+//	@PostMapping(path = "/categories", produces = "application/json")
+//	public DataResponse addData(@RequestBody List<Category> categories) {
+//		
+//		for (Category category : categories) {
+//			System.out.println(category.toString());
+//			linkCategory(category, category.getOptions());
+//		}
+//		
+//		List<Category> created = categoryRepository.saveAll(categories);
+//		int numCreated = created.size();
+//		int updated = 0;
+//		
+//		List<Long> ids = new ArrayList<>();
+//		for (Category category: created) {
+//			ids.add(category.getId());
+//		}
+//		
+//		DataResponse response = new DataResponse();
+//		response.setNumSaved(numCreated);
+//		response.setNumUpdated(updated);
+//		response.setCreatedIds(ids);
+//		response.setNumRejected(0);
+//		response.setResponseStatus(DATA_SUCCESS);
+//		
+//		return response;
+//	}
 	
 	@DeleteMapping(path = "/categories/{id}", produces = "application/json")
 	public String deleteData(@PathVariable long id) {
@@ -135,6 +141,33 @@ public class DataController {
 		}
 		
 		return delete_success(id);
+	}
+	
+
+	@DeleteMapping(path = "/categories", produces = "application/json")
+	public String deleteAllData() {
+		try {
+			categoryRepository.deleteAll();;
+		} catch (EmptyResultDataAccessException e) {
+			return nothing_found();
+		} catch (Exception e) {
+			return DELETE_FAIL;
+		}
+		
+		return DELETE_SUCCESS;
+	}
+	
+	@DeleteMapping(path = "/options", produces = "application/json")
+	public String deleteAllOptions() {
+		try {
+			optionRepository.deleteAll();;
+		} catch (EmptyResultDataAccessException e) {
+			return nothing_found();
+		} catch (Exception e) {
+			return DELETE_FAIL;
+		}
+		
+		return DELETE_SUCCESS;
 	}
 	
 	@GetMapping("/options")

@@ -1,21 +1,24 @@
 package project.ranker.model;
 
-import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "options")
+@Table(name = "rank_sessions")
 public class RankSession extends AuditModel {
 
 	@Id
@@ -29,46 +32,43 @@ public class RankSession extends AuditModel {
 	
 	@ManyToOne
 	@JoinColumn(name="category_id", nullable=false)
-	@JsonBackReference
+	@JsonBackReference(value="rankSessionCategory")
 	private Category category;
 	
-	@Column
-	private String name;
+	@OneToMany(
+		mappedBy="rankSession",
+		cascade=CascadeType.ALL)
+	@JsonManagedReference(value="optionScoreRankSession")
+	private List<OptionScore> optionScores;
 	
 	@Column
-	private Date dateCollected;
-	
-	@Column
-	private Double height;
-	
-	@Column
-	private Double volume;
+	private String ranker;
 
 	public Long getId() {
 		return id;
 	}
 
-	public Double getHeight() {
-		return height;
-	}
-
-	public void setHeight(Double height) {
-		this.height = height;
-	}
-
-	public Double getVolume() {
-		return volume;
-	}
-
-	public void setVolume(Double volume) {
-		this.volume = volume;
-	}
-
 	public Category getCatgeory() {
-		return category;
+		return this.category;
 	}
 
 	public void setCategory(Category category) {
 		this.category = category;
+	}
+
+	public List<OptionScore> getOptionScores() {
+		return optionScores;
+	}
+
+	public void setOptionScores(List<OptionScore> optionScores) {
+		this.optionScores = optionScores;
+	}
+
+	public String getRanker() {
+		return ranker;
+	}
+
+	public void setRanker(String ranker) {
+		this.ranker = ranker;
 	}
 }

@@ -1,12 +1,12 @@
 <h3>Top Heroes</h3>
 <div class="grid grid-pad">
   <a
-    *ngFor="let hero of heroes"
+    *ngFor="let category of categories"
     class="col-1-4"
-    routerLink="/detail/{{ hero.id }}"
+    routerLink="/rank/{{ category.id }}"
   >
-    <div class="module hero">
-      <h4>{{ hero.name }}</h4>
+    <div class="module category">
+      <h4>{{ category.name }}</h4>
     </div>
   </a>
 </div>
