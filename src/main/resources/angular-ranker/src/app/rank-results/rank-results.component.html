@@ -1,12 +1,4 @@
 <h2>Rank Results</h2>
-<ul class="heroes">
-  <li *ngFor="let optionScore of optionScores | sortBy: 'score'">
-    <a routerLink="/detail/{{ optionScore.id }}">
-      <span class="badge">{{ optionScore.score }}</span>
-      {{ optionScore.option.name }}
-    </a>
-  </li>
-</ul>
 <table class="table">
   <thead>
     <tr>
