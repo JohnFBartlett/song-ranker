@@ -106,4 +106,12 @@ export class HeroService {
       catchError(this.handleError<RankSession>('getRankSession'))
     );
   }
+
+  getRankSessionsForCategory(id: number): Observable<RankSession[]> {
+    console.log(`sending get request for id ${id}`);
+    return this.http.get<RankSession[]>(`${this.rankUrl}/category/${id}`).pipe(
+      tap((_) => this.log('fetched rank sessions for category')),
+      catchError(this.handleError<RankSession[]>('getRankSessionsForCategory'))
+    );
+  }
 }

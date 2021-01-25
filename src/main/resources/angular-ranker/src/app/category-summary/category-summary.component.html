@@ -1,1 +1,29 @@
-<p>category-summary works!</p>
+<h2>{{ category.name }}</h2>
+<div>
+  <h3>Options</h3>
+  <ul class="heroes">
+    <li *ngFor="let option of category.options | sortBy: 'createdAt'">
+      <span class="badge">></span>
+      {{ option.name }}
+    </li>
+  </ul>
+  <h3>Past rankings of this category</h3>
+  <ul class="heroes">
+    <li *ngFor="let rankSession of rankSessions | sortBy: 'createdAt'">
+      <a routerLink="/results/{{ rankSession.id }}">
+        <span class="badge">{{
+          rankSession.createdAt | date: "dd/MM/yyyy"
+        }}</span>
+        Ranker: {{ rankSession.ranker || "Unknown" }}
+      </a>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <label
+    >Ranker name (optional):
+    <input [(ngModel)]="rankerName" placeholder="" />
+  </label>
+</div>
+<button class="btn btn-primary" (click)="rankCategory()">Rank Category</button>

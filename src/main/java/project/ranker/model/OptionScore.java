@@ -30,7 +30,6 @@ public class OptionScore extends AuditModel {
 	
 	@ManyToOne
 	@JoinColumn(name="option_id", nullable=false)
-	@JsonManagedReference(value="optionScoreOption")
 	private Option option;
 	
 	@ManyToOne

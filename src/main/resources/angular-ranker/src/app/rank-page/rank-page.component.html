@@ -1,4 +1,7 @@
 <h3>Ranking {{ category.name }}</h3>
+<button class="btn btn-primary" (click)="toCategorySummary()">
+  Back to Category summary
+</button>
 <div class="grid grid-pad">
   <a
     *ngFor="let optionScore of displayOptions"
@@ -12,6 +15,8 @@
   </a>
   <div *ngIf="finishedRanking">
     <p>All done!</p>
-    <button (click)="saveAndSeeResults()">Save and see results</button>
+    <button class="btn btn-primary" (click)="saveAndSeeResults()">
+      Save and see results
+    </button>
   </div>
 </div>

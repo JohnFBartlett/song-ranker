@@ -42,19 +42,21 @@ export class RankPageComponent implements OnInit {
 
   getCategoryAndOptions(): void {
     const id = this.route.snapshot.paramMap.get('id');
+    const rankerName = this.route.snapshot.paramMap.get('rankerName');
     if (id) {
       this.heroService.getCategory(+id).subscribe((category) => {
         this.category = category;
         this.options = category.options;
 
-        this.createRankSession();
+        this.createRankSession(rankerName);
 
         this.chooseDisplayOptions(this.NUM_DISPLAY_OPTIONS);
       });
     }
   }
 
-  createRankSession(): void {
+  createRankSession(rankerName: string | null): void {
+    console.log('creating rank session');
     this.options.forEach((option) => {
       this.optionScores.push({
         option: option,
@@ -66,6 +68,9 @@ export class RankPageComponent implements OnInit {
       category: this.category,
       optionScores: this.optionScores,
     };
+    if (rankerName) {
+      this.rankSession.ranker = rankerName;
+    }
   }
 
   selectOption(optionScore: OptionScore): void {
@@ -129,5 +134,9 @@ export class RankPageComponent implements OnInit {
       .toPromise();
 
     this.router.navigate([`/results/${this.rankSession.id}`]);
+  }
+
+  toCategorySummary(): void {
+    this.router.navigate([`/summary/${this.rankSession!.category.id}`]);
   }
 }

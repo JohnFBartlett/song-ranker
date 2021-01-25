@@ -45,6 +45,9 @@ public class RankSessionController {
 	@Autowired
 	private RankSessionRepository rankSessionRepository;
 	
+	@Autowired
+	private CategoryRepository categoryRepository;
+	
 	final static String DATA_SUCCESS = "Successfully added data to the DB.";
 	final static String DATA_FAIL = "Failed to add data to the DB";
 	final static String DELETE_SUCCESS = "Successfully deleted data from the DB";
@@ -90,6 +93,22 @@ public class RankSessionController {
 			throw new RankSessionNotFoundException("id-" + id);
 
 		return session.get();
+	}
+	
+	@GetMapping("/category/{id}")
+	public ResponseEntity<List<RankSession>> getSessionsForCategory(
+			@PathVariable long id) throws CategoryNotFoundException {
+		System.out.println("Getting sessions for category");
+		Optional<Category> categorySearch = categoryRepository.findById(id);
+		if (!categorySearch.isPresent())
+			throw new CategoryNotFoundException("id-" + id);
+		Category category = categorySearch.get();
+		System.out.println("got category: " + category.toString());
+		
+		List<RankSession> rankSessions = category.getRankSessions();
+		System.out.println("Got " + String.valueOf(rankSessions.size()) + " rank sessions");
+
+		return new ResponseEntity<>(category.getRankSessions(), HttpStatus.OK);
 	}
 	
 	@PostMapping(path = "", produces = "application/json")

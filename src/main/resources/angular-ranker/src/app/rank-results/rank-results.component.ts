@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { OptionScore } from '../models/optionScore';
 import { RankSession } from '../models/rankSession';
 import { HeroService } from '../services/hero.service';
@@ -13,7 +13,17 @@ export class RankResultsComponent implements OnInit {
   rankSession: RankSession | undefined;
   optionScores: OptionScore[] = [];
 
-  constructor(private route: ActivatedRoute, private heroService: HeroService) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private heroService: HeroService
+  ) {}
+
+  ngOnInit(): void {
+    this.getRankSession();
+  }
+
+  getRankSession(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.heroService.getRankSession(+id).subscribe((rankSession) => {
@@ -23,9 +33,7 @@ export class RankResultsComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {
-    this.getRankSession();
+  toCategorySummary(): void {
+    this.router.navigate([`/summary/${this.rankSession!.category.id}`]);
   }
-
-  getRankSession(): void {}
 }

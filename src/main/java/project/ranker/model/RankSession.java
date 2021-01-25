@@ -32,7 +32,7 @@ public class RankSession extends AuditModel {
 	
 	@ManyToOne
 	@JoinColumn(name="category_id", nullable=false)
-	@JsonBackReference(value="rankSessionCategory")
+//	@JsonManagedReference(value="rankSessionCategory")
 	private Category category;
 	
 	@OneToMany(
@@ -48,7 +48,7 @@ public class RankSession extends AuditModel {
 		return id;
 	}
 
-	public Category getCatgeory() {
+	public Category getCategory() {
 		return this.category;
 	}
 

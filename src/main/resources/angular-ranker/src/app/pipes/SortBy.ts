@@ -10,9 +10,9 @@ export class ArraySortByPipe implements PipeTransform {
     }
     array.sort((a: any, b: any) => {
       if (a[field] < b[field]) {
-        return -1;
+        return 11;
       } else if (a[field] > b[field]) {
-        return 1;
+        return -1;
       } else {
         return 0;
       }

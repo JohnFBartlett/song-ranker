@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -43,6 +45,12 @@ public class Category extends AuditModel {
 		cascade=CascadeType.ALL)
 	@JsonManagedReference(value="categoryOptions")
 	private List<Option> options;
+	
+	@OneToMany(
+		mappedBy="category",
+		cascade=CascadeType.ALL)
+	@JsonBackReference(value="rankSessionCategory")
+	private List<RankSession> rankSessions;
 
 	public Long getId() {
 		return id;
@@ -69,5 +77,20 @@ public class Category extends AuditModel {
 			this.options = new ArrayList<Option>();
 		}
 		this.options.add(option);
+	}
+
+	public List<RankSession> getRankSessions() {
+		return rankSessions;
+	}
+
+	public void setRankSessions(List<RankSession> rankSessions) {
+		this.rankSessions = rankSessions;
+	}
+	
+	public void addRankSession(RankSession rankSession) {
+		if (this.rankSessions == null) {
+			this.rankSessions = new ArrayList<RankSession>();
+		}
+		this.rankSessions.add(rankSession);
 	}
 }
