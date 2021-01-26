@@ -14,7 +14,7 @@ export class CreateCategoryComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  async addCategory(name: string, optionString: string): void {
+  async addCategory(name: string, optionString: string): Promise<void> {
     name = name.trim();
     if (!name) {
       return;
