@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
-@RequestMapping("data")
+@RequestMapping("rankData")
 public class DataController {
 	
 	@Autowired
