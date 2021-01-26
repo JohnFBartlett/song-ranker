@@ -77,7 +77,9 @@ public class RankerApplication {
         				"https://localhost:443",
         				"https://127.0.0.1:443",
         				"http://watermap.io",
-        				"https://watermap.io"
+        				"https://watermap.io",
+        				"http://73.38.255.81",
+        				"https://73.38.255.81"
         				)
         );
         config.setAllowedOrigins(Collections.unmodifiableList(allowedOrigins)); 
