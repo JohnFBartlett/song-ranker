@@ -67,7 +67,8 @@ export class HeroService {
 
   /** POST category to the server */
   createCategory(category: Category): Observable<Category> {
-    return this.http.get<Category>(this.categoriesUrl).pipe(
+    console.log('creating category');
+    return this.http.post<Category>(this.categoriesUrl, category).pipe(
       tap((_) => this.log('created category')),
       catchError(this.handleError<Category>('addCategory'))
     );

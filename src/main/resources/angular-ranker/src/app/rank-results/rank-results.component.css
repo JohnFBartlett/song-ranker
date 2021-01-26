@@ -33,6 +33,14 @@
   color: #607d8b;
 }
 
+.padding {
+  padding: 0.5rem 1rem;
+}
+
+.border {
+  margin-bottom: 0.8em;
+}
+
 .heroes .badge {
   display: inline-block;
   font-size: small;

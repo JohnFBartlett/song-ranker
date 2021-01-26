@@ -14,6 +14,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RankPageComponent } from './rank-page/rank-page.component';
 import { RankResultsComponent } from './rank-results/rank-results.component';
 import { ArraySortByPipe } from './pipes/SortBy';
+import { AutosizeModule } from 'ngx-autosize';
 import { CategorySummaryComponent } from './category-summary/category-summary.component';
 
 @NgModule({
@@ -33,6 +34,7 @@ import { CategorySummaryComponent } from './category-summary/category-summary.co
     BrowserModule,
     FormsModule,
     AppRoutingModule,
+    AutosizeModule,
     HttpClientModule,
     NgbModule,
   ],

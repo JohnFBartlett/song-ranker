@@ -1,10 +1,26 @@
 <div>
-  <label
-    >Category name:
-    <input #categoryName />
-  </label>
-  <!-- (click) passes input value to add() and then clears the input -->
-  <button (click)="add(categoryName.value); categoryName.value = ''">
-    add
-  </button>
+  <div class="row">
+    <label
+      >Category name:
+      <input #categoryName />
+    </label>
+  </div>
+
+  <div class="row">
+    <label>All options (one per line): </label>
+    <textarea autosize #optionString cols="70"></textarea>
+  </div>
+
+  <div class="row">
+    <button
+      class="btn btn-primary"
+      (click)="
+        addCategory(categoryName.value, optionString.value);
+        categoryName.value = '';
+        optionString.value = ''
+      "
+    >
+      add
+    </button>
+  </div>
 </div>

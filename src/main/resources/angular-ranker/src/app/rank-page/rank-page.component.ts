@@ -42,7 +42,9 @@ export class RankPageComponent implements OnInit {
 
   getCategoryAndOptions(): void {
     const id = this.route.snapshot.paramMap.get('id');
-    const rankerName = this.route.snapshot.paramMap.get('rankerName');
+    console.log(`Param map: ${this.route.snapshot.paramMap}`);
+    const rankerName = this.route.snapshot.paramMap.get('ranker');
+    console.log(`Ranker name: ${rankerName}}`);
     if (id) {
       this.heroService.getCategory(+id).subscribe((category) => {
         this.category = category;

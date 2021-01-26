@@ -45,8 +45,13 @@ export class CategorySummaryComponent implements OnInit {
   }
 
   rankCategory(): void {
+    console.log(`Ranker name: ${this.rankerName}`);
     this.router.navigate([`/rank/${this.category.id}`], {
       queryParams: { ranker: this.rankerName },
     });
+  }
+
+  goToRankSession(rankSession: RankSession): void {
+    this.router.navigate([`/results/${rankSession.id}`]);
   }
 }
