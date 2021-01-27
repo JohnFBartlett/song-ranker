@@ -62,24 +62,29 @@ public class RankerApplication {
         CorsConfiguration config = new CorsConfiguration();  
         config.setAllowCredentials(true); 
         // *** URL below needs to match the Vue client URL and port ***
+//        List<String> allowedOrigins = new ArrayList<String>(
+//        		Arrays.asList(
+//        				"http://localhost",
+//        				"https://localhost",
+//        				"http://localhost:8080",
+//        				"http://127.0.0.1:8080",
+//        				"http://localhost:4200",
+//        				"http://127.0.0.1:4200",
+//        				"http://localhost:80",
+//        				"http://127.0.0.1:80",
+//        				"http://localhost:443",
+//        				"http://127.0.0.1:443",
+//        				"https://localhost:443",
+//        				"https://127.0.0.1:443",
+//        				"http://watermap.io",
+//        				"https://watermap.io",
+//        				"http://73.38.255.81",
+//        				"https://73.38.255.81"
+//        				)
+//        );
         List<String> allowedOrigins = new ArrayList<String>(
         		Arrays.asList(
-        				"http://localhost",
-        				"https://localhost",
-        				"http://localhost:8080",
-        				"http://127.0.0.1:8080",
-        				"http://localhost:4200",
-        				"http://127.0.0.1:4200",
-        				"http://localhost:80",
-        				"http://127.0.0.1:80",
-        				"http://localhost:443",
-        				"http://127.0.0.1:443",
-        				"https://localhost:443",
-        				"https://127.0.0.1:443",
-        				"http://watermap.io",
-        				"https://watermap.io",
-        				"http://73.38.255.81",
-        				"https://73.38.255.81"
+        				"*"
         				)
         );
         config.setAllowedOrigins(Collections.unmodifiableList(allowedOrigins)); 

@@ -9,14 +9,14 @@ import { RankResultsComponent } from '../rank-results/rank-results.component';
 import { CategorySummaryComponent } from '../category-summary/category-summary.component';
 
 const routes: Routes = [
-  // { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: '', component: DashboardComponent },
   { path: 'heroes', component: HeroesComponent },
   { path: 'detail/:id', component: HeroDetailComponent },
   { path: 'summary/:id', component: CategorySummaryComponent },
   { path: 'rank/:id', component: RankPageComponent },
   { path: 'results/:id', component: RankResultsComponent },
-  // { path: 'dashboard', component: DashboardComponent },
+  { path: 'dashboard', component: DashboardComponent },
   { path: 'create', component: CreateCategoryComponent },
 ];
 
