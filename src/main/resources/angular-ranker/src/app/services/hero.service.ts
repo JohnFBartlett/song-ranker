@@ -21,9 +21,9 @@ export class HeroService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
 
-  private categoriesUrl = 'http://127.0.0.1:9001/rankData/categories'; // URL to web api
-  private optionsUrl = 'http://127.0.0.1:9001/rankData/options'; // URL to web api
-  private rankUrl = 'http://127.0.0.1:9001/ranking';
+  private categoriesUrl = '/rankData/categories'; // URL to web api
+  private optionsUrl = '/rankData/options'; // URL to web api
+  private rankUrl = '/ranking';
 
   /** Log a HeroService message with the MessageService */
   private log(message: string) {
