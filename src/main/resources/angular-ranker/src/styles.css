@@ -1,1 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
+
+.rank-title {
+  border-left: 10px solid teal;
+  border-bottom: 5px solid teal;
+  margin-bottom: 4%;
+  background-color: aqua;
+}
+
+.center {
+  align-items: center;
+  justify-content: center;
+}
+
+.padding {
+  padding: 0.5rem 1rem;
+}

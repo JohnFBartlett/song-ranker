@@ -1,24 +1,30 @@
-<div class="bg-warning padding border">
-  <h3>Ranking {{ category.name }}</h3>
-</div>
-<button class="btn btn-primary" (click)="toCategorySummary()">
-  Back to Category summary
-</button>
-<div class="grid grid-pad">
-  <a
-    *ngFor="let optionScore of displayOptions"
-    class="col-6"
-    role="button"
-    (click)="selectOption(optionScore)"
+<div>
+  <button
+    class="btn back-button vertical-margin btn-primary"
+    (click)="toCategorySummary()"
   >
-    <div class="module option">
-      <h4>{{ optionScore.option.name }}</h4>
+    Back to Category summary
+  </button>
+  <div class="horizontal-margin">
+    <div class="rank-title padding">
+      <h3>Ranking {{ category.name }}</h3>
     </div>
-  </a>
-  <div *ngIf="finishedRanking">
-    <p>All done!</p>
-    <button class="btn btn-primary" (click)="saveAndSeeResults()">
-      Save and see results
-    </button>
+    <div class="row padding">
+      <div *ngFor="let optionScore of displayOptions" class="col-sm-6">
+        <div
+          class="card module option"
+          role="button"
+          (click)="selectOption(optionScore)"
+        >
+          <h4>{{ optionScore.option.name }}</h4>
+        </div>
+      </div>
+      <div *ngIf="finishedRanking">
+        <p>All done!</p>
+        <button class="btn btn-primary" (click)="saveAndSeeResults()">
+          Save and see results
+        </button>
+      </div>
+    </div>
   </div>
 </div>
