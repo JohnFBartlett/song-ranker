@@ -7,7 +7,7 @@ import { HeroService } from '../services/hero.service';
 @Component({
   selector: 'app-category-summary',
   templateUrl: './category-summary.component.html',
-  styleUrls: ['./category-summary.component.css'],
+  styleUrls: ['./category-summary.component.scss'],
 })
 export class CategorySummaryComponent implements OnInit {
   category: Category = {

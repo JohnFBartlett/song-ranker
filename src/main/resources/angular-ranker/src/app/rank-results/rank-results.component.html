@@ -1,25 +1,32 @@
-<div class="bg-warning padding border">
-  <h3>Rank Results</h3>
-</div>
-
-<button class="btn btn-primary" (click)="toCategorySummary()">
+<button
+  class="btn vertical-margin back-button btn-primary"
+  (click)="toCategorySummary()"
+>
   Back to Category summary
 </button>
-<table class="table table-striped table-bordered">
-  <thead>
-    <tr>
-      <th scope="col">Rank</th>
-      <th scope="col">Name</th>
-      <th scope="col">Score</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr
-      *ngFor="let optionScore of optionScores | sortBy: 'score'; let i = index"
-    >
-      <th scope="row">{{ i + 1 }}</th>
-      <td>{{ optionScore.option.name }}</td>
-      <td>{{ optionScore.score }}</td>
-    </tr>
-  </tbody>
-</table>
+<div class="big-horizontal-margin">
+  <div class="rank-title padding">
+    <h3>Rank Results</h3>
+  </div>
+  <table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">Rank</th>
+        <th scope="col">Name</th>
+        <th scope="col">Score</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="
+          let optionScore of optionScores | sortBy: 'score';
+          let i = index
+        "
+      >
+        <th scope="row">{{ i + 1 }}</th>
+        <td>{{ optionScore.option.name }}</td>
+        <td>{{ optionScore.score }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

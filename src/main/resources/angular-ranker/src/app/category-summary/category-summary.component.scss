@@ -1,3 +1,28 @@
+$primary-color: teal;
+$secondary-color: aqua;
+
+:host {
+  width: 100%;
+}
+
+ngb-accordion {
+  .card {
+    border: none;
+  }
+
+  .card-header {
+    @extend .h4 !optional;
+    margin-bottom: 0;
+    color: $primary-color;
+    background-color: $secondary-color;
+  }
+
+  .card-body {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+  }
+}
+
 /* HeroesComponent's private CSS styles */
 .heroes {
   margin: 0 0 2em 0;
