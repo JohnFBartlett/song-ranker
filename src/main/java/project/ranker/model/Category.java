@@ -39,6 +39,9 @@ public class Category extends AuditModel {
 	
 	@Column
 	private String name;
+	
+	@Column
+	private String type;
 
 	@OneToMany(
 		mappedBy="category",
@@ -64,6 +67,14 @@ public class Category extends AuditModel {
 		this.name = name;
 	}
 	
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
 	public List<Option> getOptions() {
 		return options;
 	}

@@ -33,6 +33,12 @@ public class Option extends AuditModel {
 	@Column
 	private String name;
 	
+	@Column
+	private String artist;
+	
+	@Column
+	private String album;
+	
 	public Long getId() {
 		return id;
 	}
@@ -51,5 +57,21 @@ public class Option extends AuditModel {
 
 	public void setCategory(Category category) {
 		this.category = category;
+	}
+
+	public String getArtist() {
+		return artist;
+	}
+
+	public void setArtist(String artist) {
+		this.artist = artist;
+	}
+
+	public String getAlbum() {
+		return album;
+	}
+
+	public void setAlbum(String album) {
+		this.album = album;
 	}
 }

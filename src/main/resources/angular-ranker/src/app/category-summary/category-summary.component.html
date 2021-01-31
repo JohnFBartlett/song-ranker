@@ -15,22 +15,27 @@
         </button>
       </div>
     </div>
-    <ngb-accordion #acc="ngbAccordion">
-      <ngb-panel>
-        <ng-template ngbPanelTitle><h4>Show Options</h4></ng-template>
-        <ng-template ngbPanelContent>
-          <ul class="heroes">
-            <li *ngFor="let option of category.options | sortBy: 'createdAt'">
-              <span class="badge">></span>
+    <div class="vertical-margin">
+      <button
+        id="accordion-button"
+        class="simple-border padding accordion"
+        (click)="toggleOptions()"
+      >
+        View Options &#43;
+      </button>
+      <div id="accordion-panel">
+        <div class="measuringWrapper secondary-background padding">
+          <ul>
+            <li *ngFor="let option of category.options | sortByReverse: 'name'">
               {{ option.name }}
             </li>
           </ul>
-        </ng-template>
-      </ngb-panel>
-    </ngb-accordion>
+        </div>
+      </div>
+    </div>
 
     <h3>Past rankings of this category</h3>
-    <table class="table table-bordered table-hover">
+    <table class="table table-bordered table-hover primary-border">
       <thead>
         <tr>
           <th scope="col">Date Ranked</th>

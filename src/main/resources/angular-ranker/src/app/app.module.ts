@@ -16,6 +16,8 @@ import { RankResultsComponent } from './rank-results/rank-results.component';
 import { ArraySortByPipe } from './pipes/SortBy';
 import { AutosizeModule } from 'ngx-autosize';
 import { CategorySummaryComponent } from './category-summary/category-summary.component';
+import { ArraySortByReversePipe } from './pipes/SortByReverse';
+import { PlaybackWindowComponent } from './playback-window/playback-window.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import { CategorySummaryComponent } from './category-summary/category-summary.co
     RankPageComponent,
     RankResultsComponent,
     ArraySortByPipe,
+    ArraySortByReversePipe,
     CategorySummaryComponent,
+    PlaybackWindowComponent,
   ],
   imports: [
     BrowserModule,
