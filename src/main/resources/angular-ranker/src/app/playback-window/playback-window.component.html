@@ -1,1 +1,11 @@
-<p>playback-window works!</p>
+<div *ngIf="songUrl; else elseBlock" class="spotify-box">
+  <iframe
+    src="{{ songUrl }}"
+    width="300"
+    height="380"
+    frameborder="0"
+    allowtransparency="true"
+    allow="encrypted-media"
+  ></iframe>
+</div>
+<ng-template #elseBlock>Could not find this song from Spotify</ng-template>

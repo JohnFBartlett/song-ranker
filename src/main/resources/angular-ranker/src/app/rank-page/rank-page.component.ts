@@ -5,6 +5,7 @@ import { Option } from '../models/option';
 import { OptionScore } from '../models/optionScore';
 import { RankSession } from '../models/rankSession';
 import { HeroService } from '../services/hero.service';
+import { SpotifyService } from '../services/spotify-service.service';
 
 @Component({
   selector: 'app-rank-page',
@@ -32,12 +33,18 @@ export class RankPageComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private heroService: HeroService
+    private heroService: HeroService,
+    private spotifyService: SpotifyService
   ) {}
 
   ngOnInit(): void {
     console.log('trying to initialize rank page');
     this.getCategoryAndOptions();
+
+    // get Spotify creds if we're ranking songs
+    this.spotifyService.getCreds().then((_) => {
+      this.spotifyService.getToken();
+    });
   }
 
   getCategoryAndOptions(): void {

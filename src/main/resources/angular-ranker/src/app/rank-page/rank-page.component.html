@@ -17,6 +17,13 @@
           (click)="selectOption(optionScore)"
         >
           <h4>{{ optionScore.option.name }}</h4>
+          <div *ngIf="category.type == 'songs'">
+            <app-playback-window
+              [song]="optionScore.option.name"
+              [artist]="optionScore.option.artist"
+              [album]="optionScore.option.album"
+            ></app-playback-window>
+          </div>
         </div>
       </div>
       <div *ngIf="finishedRanking">
