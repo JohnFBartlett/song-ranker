@@ -17,11 +17,13 @@ export class PlaybackWindowComponent implements OnInit {
 
   constructor(private spotifyService: SpotifyService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.computeSongUrl();
+  }
 
   async computeSongUrl(): Promise<void> {
     const song: Song = await this.spotifyService.getSong(this.song);
 
-    this.songUrl = `https://open.spotify.com/embed/track${song.id}`;
+    this.songUrl = `https://open.spotify.com/embed/track/${song.id}`;
   }
 }

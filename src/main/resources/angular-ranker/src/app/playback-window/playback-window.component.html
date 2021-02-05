@@ -1,6 +1,6 @@
 <div *ngIf="songUrl; else elseBlock" class="spotify-box">
   <iframe
-    src="{{ songUrl }}"
+    [src]="songUrl | safe"
     width="300"
     height="380"
     frameborder="0"

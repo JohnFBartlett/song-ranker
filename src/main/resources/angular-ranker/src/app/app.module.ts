@@ -18,6 +18,7 @@ import { AutosizeModule } from 'ngx-autosize';
 import { CategorySummaryComponent } from './category-summary/category-summary.component';
 import { ArraySortByReversePipe } from './pipes/SortByReverse';
 import { PlaybackWindowComponent } from './playback-window/playback-window.component';
+import { SafePipe } from './pipes/Safe';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { PlaybackWindowComponent } from './playback-window/playback-window.compo
     RankResultsComponent,
     ArraySortByPipe,
     ArraySortByReversePipe,
+    SafePipe,
     CategorySummaryComponent,
     PlaybackWindowComponent,
   ],

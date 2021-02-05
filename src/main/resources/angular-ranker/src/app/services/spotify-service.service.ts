@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import SpotifyWebApi from 'spotify-web-api-js';
@@ -46,6 +46,7 @@ export class SpotifyService {
   }
 
   async getCreds(): Promise<Credentials> {
+    console.log('trying to get credentials');
     this.cachedCredentials =
       this.cachedCredentials ||
       (await this.http
@@ -63,11 +64,13 @@ export class SpotifyService {
   }
 
   async getToken(): Promise<Token> {
+    console.log('trying to get token with credentials');
     if (Date.now() < this.nextCheck && this.cachedToken) {
-      console.log('Using cached token');
+      console.log(`Returning cached token`);
       return this.cachedToken;
     } else if (!this.cachedCredentials) {
-      console.log("Don't have credentials yet, so I can't get the token");
+      console.log("Don't have credentials yet. Trying to get creds");
+      await this.getCreds();
     }
 
     const encodedCreds = btoa(
@@ -78,16 +81,16 @@ export class SpotifyService {
     const requestOptions = {
       headers: new HttpHeaders({
         Authorization: `Basic ${encodedCreds}`,
+        'Content-Type': 'application/x-www-form-urlencoded',
       }),
     };
+    // const params = new HttpParams();
+    // params.set('grant_type', 'client_credentials');
+    const params = `grant_type=client_credentials`;
+
+    console.log(`These are the params: ${params}`);
     this.cachedToken = await this.http
-      .post<Token>(
-        this.spotifyTokenUrl,
-        {
-          grant_type: 'client_credentials',
-        },
-        requestOptions
-      )
+      .post<Token>(this.spotifyTokenUrl, params, requestOptions)
       .toPromise();
 
     this.nextCheck = Date.now() + 1000 * (this.cachedToken.expires_in - 5);
@@ -96,22 +99,20 @@ export class SpotifyService {
   }
 
   async getSong(songName: string): Promise<Song> {
+    console.log('Trying to get song');
     const token = await this.getToken();
 
     const requestOptions = {
       headers: new HttpHeaders({
-        Authorization: token.access_token,
+        Authorization: `Bearer ${token.access_token}`,
       }),
+      params: {
+        q: songName,
+        type: 'track',
+      },
     };
     const results = await this.http
-      .post<SongSearch>(
-        this.spotifySearchUrl,
-        {
-          q: songName,
-          type: 'track',
-        },
-        requestOptions
-      )
+      .get<SongSearch>(this.spotifySearchUrl, requestOptions)
       .toPromise();
     const pickedSong = results.tracks.items[0];
     return {
