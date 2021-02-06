@@ -8,6 +8,16 @@ interface SongItem {
   popularity?: number;
   type: string;
   uri: string;
+  artists: Artist[];
+}
+
+interface Artist {
+  external_urls: any;
+  href: string;
+  id: string;
+  name: string;
+  type: string;
+  uri: string;
 }
 
 export interface SongSearch {

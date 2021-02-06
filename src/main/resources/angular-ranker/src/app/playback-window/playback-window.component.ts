@@ -10,7 +10,7 @@ import { SpotifyService } from '../services/spotify-service.service';
 })
 export class PlaybackWindowComponent implements OnInit {
   @Input() song: string = '';
-  @Input() artist: string | undefined;
+  @Input() artist: string = '';
   @Input() album: string | undefined;
 
   songUrl: string | undefined;
@@ -22,7 +22,10 @@ export class PlaybackWindowComponent implements OnInit {
   }
 
   async computeSongUrl(): Promise<void> {
-    const song: Song = await this.spotifyService.getSong(this.song);
+    const song: Song = await this.spotifyService.getSong(
+      this.song,
+      this.artist
+    );
 
     this.songUrl = `https://open.spotify.com/embed/track/${song.id}`;
   }

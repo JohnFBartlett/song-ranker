@@ -1,15 +1,11 @@
 /* DashboardComponent's private CSS styles */
-/* [class*="col-"] {
-  float: left;
-  padding-right: 20px;
-  padding-bottom: 20px;
-}
-[class*="col-"]:last-of-type {
-  padding-right: 0;
-} */
 
 :host {
   width: 100%;
+}
+
+.spotify-holder {
+  min-width: 400px;
 }
 
 a {
@@ -41,9 +37,9 @@ h4 {
   margin: 0;
 }
 
-/* .option {
-  padding: 1rem 1rem;
-} */
+.bottom-padding {
+  padding-bottom: 1.5rem;
+}
 
 .padding {
   padding: 0.5rem 1rem;
@@ -52,7 +48,8 @@ h4 {
     width: 25%;
   } */
 .module {
-  padding: 10%;
+  padding: 7%;
+  margin-bottom: 10%;
   text-align: center;
   color: #eee;
   /* max-height: 120px; */

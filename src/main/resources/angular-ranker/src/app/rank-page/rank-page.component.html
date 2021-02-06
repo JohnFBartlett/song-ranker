@@ -9,18 +9,21 @@
     <div class="rank-title padding">
       <h3>Ranking {{ category.name }}</h3>
     </div>
-    <div class="row padding">
-      <div *ngFor="let optionScore of displayOptions" class="col-sm-6">
+    <div class="row padding d-flex flex-wrap">
+      <div
+        *ngFor="let optionScore of displayOptions"
+        class="spotify-holder col-sm-6"
+      >
         <div
           class="card module option"
           role="button"
           (click)="selectOption(optionScore)"
         >
-          <h4>{{ optionScore.option.name }}</h4>
+          <h4 class="bottom-padding">{{ optionScore.option.name }}</h4>
           <div *ngIf="category.type == 'songs'">
             <app-playback-window
               [song]="optionScore.option.name"
-              [artist]="optionScore.option.artist"
+              [artist]="optionScore.option.artist || ''"
               [album]="optionScore.option.album"
             ></app-playback-window>
           </div>

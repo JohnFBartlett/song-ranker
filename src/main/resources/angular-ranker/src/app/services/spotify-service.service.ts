@@ -99,7 +99,7 @@ export class SpotifyService {
     return this.cachedToken;
   }
 
-  async getSong(songName: string): Promise<Song> {
+  async getSong(songName: string, artist: string): Promise<Song> {
     console.log('Trying to get song');
     const token = await this.getToken();
 
@@ -110,15 +110,26 @@ export class SpotifyService {
       params: {
         q: songName,
         type: 'track',
+        market: 'US',
       },
     };
     const results = await this.http
       .get<SongSearch>(this.spotifySearchUrl, requestOptions)
       .toPromise();
-    const pickedSong = results.tracks.items[0];
+    for (let i = 0; i < results.tracks.items.length; i++) {
+      let considering = results.tracks.items[i];
+      for (let j = 0; j < considering.artists.length; j++) {
+        if (considering.artists[j].name == artist) {
+          return {
+            name: considering.name,
+            id: considering.id,
+          };
+        }
+      }
+    }
     return {
-      name: pickedSong.name,
-      id: pickedSong.id,
+      name: 'Not found',
+      id: 'Not found',
     };
   }
 }
