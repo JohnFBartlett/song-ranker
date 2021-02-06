@@ -3,7 +3,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
-import { MessageService } from './message.service';
 import { Option } from '../models/option';
 import { Category } from '../models/category';
 import { RankSession } from '../models/rankSession';
@@ -12,10 +11,7 @@ import { RankSession } from '../models/rankSession';
   providedIn: 'root',
 })
 export class HeroService {
-  constructor(
-    private messageService: MessageService,
-    private http: HttpClient
-  ) {}
+  constructor(private http: HttpClient) {}
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -30,7 +26,7 @@ export class HeroService {
 
   /** Log a HeroService message with the MessageService */
   private log(message: string) {
-    this.messageService.add(`HeroService: ${message}`);
+    console.log(`HeroService: ${message}`);
   }
 
   /**
