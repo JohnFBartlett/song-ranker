@@ -1,12 +1,15 @@
 package project.ranker.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -37,6 +40,17 @@ public class OptionScore extends AuditModel {
 	@JsonBackReference(value="optionScoreRankSession")
 	private RankSession rankSession;
 	
+	@ManyToMany
+	private List<OptionScore> matchups;
+	
+	public List<OptionScore> getMatchups() {
+		return matchups;
+	}
+
+	public void setMatchups(List<OptionScore> matchups) {
+		this.matchups = matchups;
+	}
+
 	@Column
 	private Double score;
 	
