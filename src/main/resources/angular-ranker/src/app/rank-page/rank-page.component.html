@@ -1,3 +1,38 @@
+<ng-template #passwordModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">
+      Create a password for when you continue:
+    </h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div *ngIf="rankSession" class="modal-body">
+    <form>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <div class="input-group">
+          <input name="password" [(ngModel)]="rankSession!.password" />
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-dark"
+      (click)="modal.close(rankSession?.password)"
+    >
+      Save
+    </button>
+  </div>
+</ng-template>
+
 <div>
   <button
     class="btn back-button vertical-margin btn-primary"
@@ -9,6 +44,12 @@
     <div class="rank-title padding">
       <h3>Ranking {{ category.name }}</h3>
     </div>
+    <button
+      class="btn back-button vertical-margin btn-primary"
+      (click)="openModal(passwordModal)"
+    >
+      Save Progess and Exit
+    </button>
     <div class="row padding d-flex flex-wrap">
       <div
         *ngFor="let optionScore of displayOptions"

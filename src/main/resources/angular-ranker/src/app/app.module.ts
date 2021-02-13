@@ -18,6 +18,8 @@ import { CategorySummaryComponent } from './category-summary/category-summary.co
 import { ArraySortByReversePipe } from './pipes/SortByReverse';
 import { PlaybackWindowComponent } from './playback-window/playback-window.component';
 import { SafePipe } from './pipes/Safe';
+import { PasswordModalComponent } from './password-modal/password-modal.component';
+import { RequestPasswordModalComponent } from './request-password-modal/request-password-modal.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +35,8 @@ import { SafePipe } from './pipes/Safe';
     SafePipe,
     CategorySummaryComponent,
     PlaybackWindowComponent,
+    PasswordModalComponent,
+    RequestPasswordModalComponent,
   ],
   imports: [
     BrowserModule,

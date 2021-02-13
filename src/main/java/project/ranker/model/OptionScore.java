@@ -15,8 +15,13 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+@JsonIdentityInfo(
+		   generator = ObjectIdGenerators.PropertyGenerator.class,
+		   property = "id")
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "option_scores")
@@ -42,14 +47,6 @@ public class OptionScore extends AuditModel {
 	
 	@ManyToMany
 	private List<OptionScore> matchups;
-	
-	public List<OptionScore> getMatchups() {
-		return matchups;
-	}
-
-	public void setMatchups(List<OptionScore> matchups) {
-		this.matchups = matchups;
-	}
 
 	@Column
 	private Double score;
@@ -67,6 +64,14 @@ public class OptionScore extends AuditModel {
 
 	public void setOption(Option option) {
 		this.option = option;
+	}
+	
+	public List<OptionScore> getMatchups() {
+		return matchups;
+	}
+
+	public void setMatchups(List<OptionScore> matchups) {
+		this.matchups = matchups;
 	}
 
 	public RankSession getRankSession() {

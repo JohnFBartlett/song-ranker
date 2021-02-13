@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Category } from '../models/category';
 import { Option } from '../models/option';
 import { OptionScore } from '../models/optionScore';
@@ -34,7 +35,8 @@ export class RankPageComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private heroService: HeroService,
-    private spotifyService: SpotifyService
+    private spotifyService: SpotifyService,
+    private modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
@@ -47,20 +49,24 @@ export class RankPageComponent implements OnInit {
     });
   }
 
-  getCategoryAndOptions(): void {
+  async getCategoryAndOptions(): Promise<void> {
     const id = this.route.snapshot.paramMap.get('id');
-    console.log(`Param map: ${this.route.snapshot.queryParamMap.keys}`);
     const rankerName = this.route.snapshot.queryParamMap.get('ranker');
+    const rankSessionId = this.route.snapshot.paramMap.get('rankSessionId');
     console.log(`Ranker name: ${rankerName}`);
     if (id) {
-      this.heroService.getCategory(+id).subscribe((category) => {
-        this.category = category;
-        this.options = category.options;
+      this.category = await this.heroService.getCategory(+id).toPromise();
+      this.options = this.category.options;
 
+      if (rankSessionId) {
+        this.rankSession = await this.heroService
+          .getRankSession(+rankSessionId)
+          .toPromise();
+      } else {
         this.createRankSession(rankerName);
+      }
 
-        this.chooseDisplayOptions(this.NUM_DISPLAY_OPTIONS);
-      });
+      this.chooseDisplayOptions(this.NUM_DISPLAY_OPTIONS);
     }
   }
 
@@ -71,9 +77,11 @@ export class RankPageComponent implements OnInit {
         option: option,
         timesRanked: 0,
         score: 0,
+        matchups: [],
       });
     });
     this.rankSession = {
+      completenessScore: 0,
       category: this.category,
       optionScores: this.optionScores,
     };
@@ -104,6 +112,31 @@ export class RankPageComponent implements OnInit {
       (this.twiceRankedCondion || this.checkTwiceRanked()) &&
       (this.totalQuotaCondition || this.checkTotalQuota())
     );
+  }
+
+  async openModal(content: any): Promise<void> {
+    console.log('opening modal!');
+    this.modalService
+      .open(content, { ariaLabelledBy: 'modal-basic-title' })
+      .result.then(
+        async (password) => {
+          if (!this.rankSession) {
+            console.log('no rank session');
+            this.createRankSession(null);
+          } else {
+            console.log(`saving password: ${password}`);
+            this.rankSession.password = btoa(password);
+            console.log(`converted password: ${password}`);
+            await this.heroService
+              .submitRankSession(this.rankSession)
+              .toPromise();
+            this.toCategorySummary();
+          }
+        },
+        (reason) => {
+          console.log(`Password box dismissed with reason: ${reason}`);
+        }
+      );
   }
 
   checkTwiceRanked(): boolean {

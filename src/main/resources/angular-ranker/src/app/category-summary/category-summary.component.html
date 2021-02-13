@@ -38,18 +38,37 @@
     <table class="table table-bordered table-hover primary-border">
       <thead>
         <tr>
+          <th scope="col">Completeness Score</th>
           <th scope="col">Date Ranked</th>
           <th scope="col">Ranker</th>
+          <th scope="col"></th>
+          <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
-        <tr
-          *ngFor="let rankSession of rankSessions | sortBy: 'createdAt'"
-          role="button"
-          (click)="goToRankSession(rankSession)"
-        >
-          <th scope="row">{{ rankSession.createdAt | date: "dd/MM/yyyy" }}</th>
+        <tr *ngFor="let rankSession of rankSessions | sortBy: 'createdAt'">
+          <th scope="row">
+            {{ rankSession.completenessScore }}
+          </th>
+          <td>{{ rankSession.createdAt | date: "dd/MM/yyyy" }}</td>
           <td>{{ rankSession.ranker || "Unkown" }}</td>
+          <td>
+            <button
+              *ngIf="rankSession.password"
+              class="btn btn-primary"
+              (click)="tryContinueSession(rankSession)"
+            >
+              Continue Ranking
+            </button>
+          </td>
+          <td>
+            <button
+              class="btn btn-primary"
+              (click)="goToRankSession(rankSession)"
+            >
+              View Results
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>

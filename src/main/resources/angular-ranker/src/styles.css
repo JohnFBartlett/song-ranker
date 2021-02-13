@@ -43,8 +43,8 @@ h3 {
 }
 
 .big-horizontal-margin {
-  margin-left: 25%;
-  margin-right: 25%;
+  margin-left: 20%;
+  margin-right: 20%;
 }
 
 .vertical-margin {
@@ -61,6 +61,7 @@ h3 {
 .btn-primary:active,
 .btn-primary:visited {
   background-color: #3f525c !important;
+  border-color: teal;
 }
 
 .back-button:before {

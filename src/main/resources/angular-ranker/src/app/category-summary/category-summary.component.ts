@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Category } from '../models/category';
 import { RankSession } from '../models/rankSession';
+import { RequestPasswordModalComponent } from '../request-password-modal/request-password-modal.component';
 import { HeroService } from '../services/hero.service';
 
 @Component({
@@ -20,7 +22,8 @@ export class CategorySummaryComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private heroService: HeroService
+    private heroService: HeroService,
+    private modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
@@ -36,13 +39,6 @@ export class CategorySummaryComponent implements OnInit {
   toggleOptions(): void {
     let panel = document.getElementById('accordion-panel');
     let button = document.getElementById('accordion-button')!;
-    // if (panel) {
-    //   if (panel.style.display === 'block') {
-    //     panel.style.display = 'none';
-    //   } else {
-    //     panel.style.display = 'block';
-    //   }
-    // }
     if (panel) {
       if (panel.clientHeight) {
         panel.style.height = '0';
@@ -53,6 +49,16 @@ export class CategorySummaryComponent implements OnInit {
         button.textContent = 'Hide Options \u2212';
       }
     }
+  }
+
+  tryContinueSession(rankSession: RankSession) {
+    const modalRef = this.modalService.open(RequestPasswordModalComponent);
+    modalRef.componentInstance.correctPassword = rankSession.password;
+    modalRef.result.then((result) => {
+      if (result == 'correct') {
+        this.rankCategory(rankSession);
+      }
+    });
   }
 
   getRankSessions(): void {
@@ -66,10 +72,10 @@ export class CategorySummaryComponent implements OnInit {
       });
   }
 
-  rankCategory(): void {
+  rankCategory(rankSessionId: RankSession | null = null): void {
     console.log(`Ranker name: ${this.rankerName}`);
     this.router.navigate([`/rank/${this.category.id}`], {
-      queryParams: { ranker: this.rankerName },
+      queryParams: { ranker: this.rankerName, rankSessionId: rankSessionId },
     });
   }
 

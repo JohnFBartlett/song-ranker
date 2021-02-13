@@ -7,4 +7,5 @@ export interface OptionScore {
   option: Option;
   timesRanked: number;
   score: number;
+  matchups: OptionScore[];
 }

@@ -8,4 +8,6 @@ export interface RankSession {
   updatedAt?: Date;
   category: Category;
   optionScores: OptionScore[];
+  password?: string; // base64 encoded
+  completenessScore: number;
 }

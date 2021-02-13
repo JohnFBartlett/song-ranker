@@ -46,6 +46,12 @@ public class RankSession extends AuditModel {
 	
 	@Column
 	private String password;
+	
+	@Column
+	private String algorithmType;
+	
+	@Column
+	private Double completenessScore;
 
 	public String getPassword() {
 		return password;
@@ -53,6 +59,14 @@ public class RankSession extends AuditModel {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public Double getCompletenessScore() {
+		return completenessScore;
+	}
+
+	public void setCompletenessScore(Double completenessScore) {
+		this.completenessScore = completenessScore;
 	}
 
 	public Long getId() {
@@ -81,5 +95,13 @@ public class RankSession extends AuditModel {
 
 	public void setRanker(String ranker) {
 		this.ranker = ranker;
+	}
+
+	public String getAlgorithmType() {
+		return algorithmType;
+	}
+
+	public void setAlgorithmType(String algorithmType) {
+		this.algorithmType = algorithmType;
 	}
 }

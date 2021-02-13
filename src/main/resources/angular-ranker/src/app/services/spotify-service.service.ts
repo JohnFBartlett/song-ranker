@@ -14,8 +14,8 @@ import { SongSearch } from '../models/songSearch';
 export class SpotifyService {
   spotifyApi: SpotifyWebApi.SpotifyWebApiJs;
 
-  // private credsUrl = 'http://localhost:9001/credentials';
-  private credsUrl = '/credentials';
+  private credsUrl = 'http://localhost:9001/credentials';
+  // private credsUrl = '/credentials';
   private spotifyTokenUrl = 'https://accounts.spotify.com/api/token';
   private spotifySearchUrl = 'https://api.spotify.com/v1/search/';
 
