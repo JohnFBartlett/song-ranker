@@ -1,4 +1,6 @@
+import { ThisReceiver } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Category } from '../models/category';
@@ -17,7 +19,10 @@ export class CategorySummaryComponent implements OnInit {
     options: [],
   };
   rankSessions: RankSession[] = [];
-  rankerName = '';
+  form = new FormGroup({
+    rankerName: new FormControl(''),
+    algorithm: new FormControl('advanced'),
+  });
 
   constructor(
     private route: ActivatedRoute,
@@ -56,9 +61,28 @@ export class CategorySummaryComponent implements OnInit {
     modalRef.componentInstance.correctPassword = rankSession.password;
     modalRef.result.then((result) => {
       if (result == 'correct') {
-        this.rankCategory(rankSession);
+        this.rankCategory(rankSession.id);
       }
     });
+  }
+
+  tryDeleteSession(rankSession: RankSession) {
+    if (rankSession.password) {
+      const modalRef = this.modalService.open(RequestPasswordModalComponent);
+      modalRef.componentInstance.correctPassword = rankSession.password;
+      modalRef.result.then((result) => {
+        if (result == 'correct') {
+          this.deleteRankSession(rankSession);
+        }
+      });
+    } else {
+      this.deleteRankSession(rankSession);
+    }
+  }
+
+  async deleteRankSession(rankSession: RankSession) {
+    await this.heroService.deleteRankSession(rankSession.id!).toPromise();
+    window.location.reload();
   }
 
   getRankSessions(): void {
@@ -72,10 +96,14 @@ export class CategorySummaryComponent implements OnInit {
       });
   }
 
-  rankCategory(rankSessionId: RankSession | null = null): void {
-    console.log(`Ranker name: ${this.rankerName}`);
+  rankCategory(rankSessionId: number | null = null): void {
+    console.log(`Ranker name: ${this.form.controls.rankerName.value}`);
     this.router.navigate([`/rank/${this.category.id}`], {
-      queryParams: { ranker: this.rankerName, rankSessionId: rankSessionId },
+      queryParams: {
+        ranker: this.form.controls.rankerName.value,
+        algorithm: this.form.controls.algorithm.value,
+        rankSessionId: rankSessionId,
+      },
     });
   }
 

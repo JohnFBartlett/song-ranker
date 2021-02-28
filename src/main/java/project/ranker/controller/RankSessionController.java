@@ -122,8 +122,9 @@ public class RankSessionController {
 	}
 	
 	@DeleteMapping(path = "/{id}", produces = "application/json")
-	public String deleteData(@PathVariable long id) {
+	public ResponseEntity<String> deleteData(@PathVariable long id) {
 		try {
+			System.out.println("Trying to delete session");
 			Optional<RankSession> session = rankSessionRepository.findById(id);
 
 			if (!session.isPresent())
@@ -133,11 +134,12 @@ public class RankSessionController {
 			optionScoreRepository.deleteAll(optionScores);
 			rankSessionRepository.delete(rankSession);
 		} catch (EmptyResultDataAccessException e) {
-			return delete_not_found(id);
+			return new ResponseEntity<>(delete_not_found(id), HttpStatus.NOT_FOUND);
 		} catch (Exception e) {
-			return delete_failed(id);
+			System.out.println(e.getMessage());
+			return new ResponseEntity<>(delete_failed(id), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
-		return delete_success(id);
+		return new ResponseEntity<>(delete_success(id), HttpStatus.OK);
 	}
 }

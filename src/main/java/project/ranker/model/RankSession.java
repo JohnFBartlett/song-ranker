@@ -52,6 +52,9 @@ public class RankSession extends AuditModel {
 	
 	@Column
 	private Double completenessScore;
+	
+	@Column
+	private Integer numRanks;
 
 	public String getPassword() {
 		return password;
@@ -59,6 +62,14 @@ public class RankSession extends AuditModel {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public Integer getNumRanks() {
+		return numRanks;
+	}
+
+	public void setNumRanks(Integer numRanks) {
+		this.numRanks = numRanks;
 	}
 
 	public Double getCompletenessScore() {

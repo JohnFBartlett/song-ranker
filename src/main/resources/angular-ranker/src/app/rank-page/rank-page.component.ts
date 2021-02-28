@@ -7,6 +7,9 @@ import { OptionScore } from '../models/optionScore';
 import { RankSession } from '../models/rankSession';
 import { HeroService } from '../services/hero.service';
 import { SpotifyService } from '../services/spotify-service.service';
+import { AdvancedRanker } from '../strategies/advancedRanker';
+import { BasicRanker } from '../strategies/basicRanker';
+import { Ranker } from '../strategies/ranker';
 
 @Component({
   selector: 'app-rank-page',
@@ -26,9 +29,7 @@ export class RankPageComponent implements OnInit {
   options: Option[] = [];
   displayOptions: OptionScore[] = [];
 
-  // state variables
-  twiceRankedCondion = false;
-  totalQuotaCondition = false;
+  rankerAlg: Ranker | undefined;
   finishedRanking = false;
 
   constructor(
@@ -52,7 +53,11 @@ export class RankPageComponent implements OnInit {
   async getCategoryAndOptions(): Promise<void> {
     const id = this.route.snapshot.paramMap.get('id');
     const rankerName = this.route.snapshot.queryParamMap.get('ranker');
-    const rankSessionId = this.route.snapshot.paramMap.get('rankSessionId');
+    const algorithm =
+      this.route.snapshot.queryParamMap.get('algorithm') || 'advanced';
+    const rankSessionId = this.route.snapshot.queryParamMap.get(
+      'rankSessionId'
+    );
     console.log(`Ranker name: ${rankerName}`);
     if (id) {
       this.category = await this.heroService.getCategory(+id).toPromise();
@@ -62,15 +67,31 @@ export class RankPageComponent implements OnInit {
         this.rankSession = await this.heroService
           .getRankSession(+rankSessionId)
           .toPromise();
+        if (algorithm) {
+          this.initRankerAlg(algorithm);
+        }
       } else {
-        this.createRankSession(rankerName);
+        this.createRankSession(rankerName, algorithm);
       }
 
       this.chooseDisplayOptions(this.NUM_DISPLAY_OPTIONS);
     }
   }
 
-  createRankSession(rankerName: string | null): void {
+  initRankerAlg(algorithm: string) {
+    // replace ranker with correct type
+    if (this.rankSession) {
+      if (algorithm == 'basic') {
+        this.rankerAlg = new BasicRanker(this.rankSession);
+      } else {
+        this.rankerAlg = new AdvancedRanker(this.rankSession);
+      }
+    } else {
+      console.error("Rank session doesn't exist yet!");
+    }
+  }
+
+  createRankSession(rankerName: string | null, algorithm: string): void {
     console.log('creating rank session');
     this.options.forEach((option) => {
       this.optionScores.push({
@@ -82,36 +103,36 @@ export class RankPageComponent implements OnInit {
     });
     this.rankSession = {
       completenessScore: 0,
+      numRanks: 0,
       category: this.category,
       optionScores: this.optionScores,
+      algorithmType: algorithm,
     };
+    this.initRankerAlg(algorithm);
     if (rankerName) {
       this.rankSession.ranker = rankerName;
     }
   }
 
-  selectOption(optionScore: OptionScore): void {
+  selectOption(winner: OptionScore): void {
+    const loser = this.displayOptions.find((option) => option != winner);
+    if (!loser) {
+      console.error('could not find loser option');
+      return;
+    }
     this.displayOptions.forEach((displayOption) => {
       displayOption.timesRanked++;
     });
-    optionScore.score++;
-    if (this.checkIfDone()) {
+    this.rankerAlg!.choicePicked(winner, loser);
+    this.rankSession!.numRanks++;
+    this.rankSession!.completenessScore = this.rankerAlg!.calculateCompletenessScore();
+    if (this.rankerAlg!.checkIfDone()) {
       // Display finish button
       this.finishedRanking = true;
       this.displayOptions = [];
     } else {
       this.chooseDisplayOptions(this.NUM_DISPLAY_OPTIONS);
     }
-  }
-
-  // two conditions (both must be met):
-  // 1. all ranked twice
-  // 2. there have been 3n rankings total
-  checkIfDone(): boolean {
-    return (
-      (this.twiceRankedCondion || this.checkTwiceRanked()) &&
-      (this.totalQuotaCondition || this.checkTotalQuota())
-    );
   }
 
   async openModal(content: any): Promise<void> {
@@ -122,7 +143,7 @@ export class RankPageComponent implements OnInit {
         async (password) => {
           if (!this.rankSession) {
             console.log('no rank session');
-            this.createRankSession(null);
+            this.createRankSession(null, 'advanced');
           } else {
             console.log(`saving password: ${password}`);
             this.rankSession.password = btoa(password);
@@ -139,34 +160,10 @@ export class RankPageComponent implements OnInit {
       );
   }
 
-  checkTwiceRanked(): boolean {
-    for (var i = 0; i < this.optionScores.length; i++) {
-      if (this.optionScores[i].timesRanked < 2) {
-        return false;
-      }
-    }
-    return true;
-  }
-
-  checkTotalQuota(): boolean {
-    let totalCount = 0;
-    this.optionScores.forEach((optionScore) => {
-      totalCount += optionScore.timesRanked;
-    });
-
-    return totalCount > 3 * this.optionScores.length;
-  }
-
   chooseDisplayOptions(numOptions: number): void {
-    this.displayOptions = [];
-    let choosingArray = [...this.optionScores];
-
-    for (var i = 0; i < numOptions; i++) {
-      if (choosingArray.length == 0) break;
-      const index = Math.floor(Math.random() * choosingArray.length);
-      this.displayOptions.push(choosingArray[index]);
-      choosingArray.splice(index, 1);
-    }
+    this.displayOptions = this.rankerAlg!.chooseDisplayOptions(
+      this.NUM_DISPLAY_OPTIONS
+    );
   }
 
   async saveAndSeeResults() {

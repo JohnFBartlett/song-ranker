@@ -17,20 +17,34 @@
       <div class="form-group">
         <label for="password">Password</label>
         <div class="input-group">
-          <input name="password" [(ngModel)]="rankSession!.password" />
+          <form
+            id="passwordForm"
+            #passwordForm="ngForm"
+            (ngSubmit)="modal.close(passwordForm.value.password)"
+          >
+            <input
+              type="password"
+              name="password"
+              placeholder="passwd"
+              ngModel
+            />
+            <br class="vertical-margin" />
+            <input
+              type="submit"
+              class="btn btn-outline-dark"
+              form="passwordForm"
+              value="Save"
+            />
+          </form>
         </div>
       </div>
     </form>
   </div>
-  <div class="modal-footer">
-    <button
-      type="button"
-      class="btn btn-outline-dark"
-      (click)="modal.close(rankSession?.password)"
-    >
+  <!-- <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" form="passwordForm">
       Save
     </button>
-  </div>
+  </div> -->
 </ng-template>
 
 <div>
@@ -43,8 +57,10 @@
   <div class="horizontal-margin">
     <div class="rank-title padding">
       <h3>Ranking {{ category.name }}</h3>
+      <h4>Completeness: {{ rankSession?.completenessScore }}%</h4>
     </div>
     <button
+      *ngIf="!finishedRanking"
       class="btn back-button vertical-margin btn-primary"
       (click)="openModal(passwordModal)"
     >

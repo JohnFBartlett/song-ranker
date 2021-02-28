@@ -107,6 +107,13 @@ export class HeroService {
     );
   }
 
+  deleteRankSession(id: number): Observable<string> {
+    return this.http.delete<string>(`${this.rankUrl}/${id}`).pipe(
+      tap((_) => this.log('deleted rank session')),
+      catchError(this.handleError<string>('getRankSession'))
+    );
+  }
+
   getRankSessionsForCategory(id: number): Observable<RankSession[]> {
     console.log(`sending get request for id ${id}`);
     return this.http.get<RankSession[]>(`${this.rankUrl}/category/${id}`).pipe(

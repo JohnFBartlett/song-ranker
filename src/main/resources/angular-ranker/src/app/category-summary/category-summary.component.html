@@ -5,10 +5,22 @@
   <div>
     <div class="vertical-margin padding simple-border">
       <h3>Make a new ranking</h3>
-      <label
-        >Ranker name (optional):
-        <input [(ngModel)]="rankerName" placeholder="" />
-      </label>
+      <form [formGroup]="form">
+        <label
+          >Ranker name (optional):
+          <input formControlName="rankerName" placeholder="" />
+        </label>
+        <label
+          >Choose the type of algorithm you want to use:
+          <div>
+            <input type="radio" formControlName="algorithm" value="advanced" />
+            Fancy
+            <br />
+            <input type="radio" formControlName="algorithm" value="basic" />
+            Basic
+          </div>
+        </label>
+      </form>
       <div>
         <button class="btn btn-primary" (click)="rankCategory()">
           Rank Category
@@ -43,13 +55,12 @@
           <th scope="col">Ranker</th>
           <th scope="col"></th>
           <th scope="col"></th>
+          <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let rankSession of rankSessions | sortBy: 'createdAt'">
-          <th scope="row">
-            {{ rankSession.completenessScore }}
-          </th>
+          <th scope="row">{{ rankSession.completenessScore }}%</th>
           <td>{{ rankSession.createdAt | date: "dd/MM/yyyy" }}</td>
           <td>{{ rankSession.ranker || "Unkown" }}</td>
           <td>
@@ -67,6 +78,14 @@
               (click)="goToRankSession(rankSession)"
             >
               View Results
+            </button>
+          </td>
+          <td>
+            <button
+              class="btn btn-primary"
+              (click)="tryDeleteSession(rankSession)"
+            >
+              Delete
             </button>
           </td>
         </tr>
