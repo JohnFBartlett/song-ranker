@@ -12,4 +12,5 @@ export interface RankSession {
   completenessScore: number;
   numRanks: number;
   algorithmType: string;
+  extendedRank: boolean;
 }

@@ -1,3 +1,4 @@
+import { ThisReceiver } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -24,6 +25,11 @@ export class RankPageComponent implements OnInit {
     name: 'Loading Category...',
     options: [],
   };
+
+  previousWinner: OptionScore | null = null;
+  previousLoser: OptionScore | null = null;
+  previousDisplayOptions: OptionScore[] | null = null;
+  previousScoreDelta: number | null = null;
 
   NUM_DISPLAY_OPTIONS = 2;
   options: Option[] = [];
@@ -107,10 +113,36 @@ export class RankPageComponent implements OnInit {
       category: this.category,
       optionScores: this.optionScores,
       algorithmType: algorithm,
+      extendedRank: false,
     };
     this.initRankerAlg(algorithm);
     if (rankerName) {
       this.rankSession.ranker = rankerName;
+    }
+  }
+
+  undoAvailable(): boolean {
+    return (
+      this.previousWinner != null &&
+      this.previousLoser != null &&
+      this.previousScoreDelta != null &&
+      this.previousDisplayOptions != null
+    );
+  }
+
+  undo(): void {
+    if (this.undoAvailable()) {
+      this.previousWinner!.score -= this.previousScoreDelta!;
+      this.previousLoser!.score += this.previousScoreDelta!;
+
+      this.displayOptions = this.previousDisplayOptions!;
+
+      this.previousWinner = null;
+      this.previousLoser = null;
+      this.previousDisplayOptions = null;
+      this.previousScoreDelta = null;
+    } else {
+      console.error("Can't undo, nothing to undo");
     }
   }
 
@@ -126,7 +158,7 @@ export class RankPageComponent implements OnInit {
     this.rankerAlg!.choicePicked(winner, loser);
     this.rankSession!.numRanks++;
     this.rankSession!.completenessScore = this.rankerAlg!.calculateCompletenessScore();
-    if (this.rankerAlg!.checkIfDone()) {
+    if (!this.rankSession?.extendedRank && this.rankerAlg!.checkIfDone()) {
       // Display finish button
       this.finishedRanking = true;
       this.displayOptions = [];
@@ -135,29 +167,46 @@ export class RankPageComponent implements OnInit {
     }
   }
 
+  continueRanking() {
+    this.finishedRanking = false;
+    if (this.rankSession) {
+      this.rankSession.extendedRank = true;
+
+      // don't need to wait for this call
+      // just saves that we want to keep going
+      this.heroService.submitRankSession(this.rankSession);
+    }
+    this.chooseDisplayOptions(this.NUM_DISPLAY_OPTIONS);
+  }
+
   async openModal(content: any): Promise<void> {
-    console.log('opening modal!');
-    this.modalService
-      .open(content, { ariaLabelledBy: 'modal-basic-title' })
-      .result.then(
-        async (password) => {
-          if (!this.rankSession) {
-            console.log('no rank session');
-            this.createRankSession(null, 'advanced');
-          } else {
-            console.log(`saving password: ${password}`);
-            this.rankSession.password = btoa(password);
-            console.log(`converted password: ${password}`);
-            await this.heroService
-              .submitRankSession(this.rankSession)
-              .toPromise();
-            this.toCategorySummary();
+    // don't open modal if session already has a password
+    if (this.rankSession?.password) {
+      await this.heroService.submitRankSession(this.rankSession).toPromise();
+      this.toCategorySummary();
+    } else {
+      this.modalService
+        .open(content, { ariaLabelledBy: 'modal-basic-title' })
+        .result.then(
+          async (password) => {
+            if (!this.rankSession) {
+              console.log('no rank session');
+              this.createRankSession(null, 'advanced');
+            } else {
+              console.log(`saving password: ${password}`);
+              this.rankSession.password = btoa(password);
+              console.log(`converted password: ${password}`);
+              await this.heroService
+                .submitRankSession(this.rankSession)
+                .toPromise();
+              this.toCategorySummary();
+            }
+          },
+          (reason) => {
+            console.log(`Password box dismissed with reason: ${reason}`);
           }
-        },
-        (reason) => {
-          console.log(`Password box dismissed with reason: ${reason}`);
-        }
-      );
+        );
+    }
   }
 
   chooseDisplayOptions(numOptions: number): void {

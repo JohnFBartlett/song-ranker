@@ -41,6 +41,9 @@ public class RankSession extends AuditModel {
 	@JsonManagedReference(value="optionScoreRankSession")
 	private List<OptionScore> optionScores;
 	
+	@Column(columnDefinition = "boolean default false")
+	private boolean extendedRank;
+	
 	@Column
 	private String ranker;
 	
@@ -98,6 +101,14 @@ public class RankSession extends AuditModel {
 
 	public void setOptionScores(List<OptionScore> optionScores) {
 		this.optionScores = optionScores;
+	}
+
+	public boolean isExtendedRank() {
+		return extendedRank;
+	}
+
+	public void setExtendedRank(boolean extendedRank) {
+		this.extendedRank = extendedRank;
 	}
 
 	public String getRanker() {

@@ -18,6 +18,7 @@ export class AdvancedRanker extends Ranker {
   numTiers = 0;
   maxTiers: number;
   numToTierUpgrade: number;
+  completeness: number = 0;
 
   activeChoices: ActiveChoice[] = [];
   tiersArray: OptionScore[][] = [];
@@ -30,10 +31,10 @@ export class AdvancedRanker extends Ranker {
     this.optionScores = rankSession.optionScores;
     this.totalRanks = rankSession.numRanks;
     this.numToTierUpgrade = Math.max(
-      Math.floor(rankSession.optionScores.length / 4),
+      Math.floor(rankSession.optionScores.length / 3),
       1
     );
-    this.maxTiers = Math.min(10, rankSession.optionScores.length);
+    this.maxTiers = Math.min(15, rankSession.optionScores.length);
 
     this.numTiers = Math.floor(this.totalRanks / this.numToTierUpgrade);
     this.reindex();
@@ -81,7 +82,9 @@ export class AdvancedRanker extends Ranker {
   reindex(): void {
     console.log('reindexing...');
     console.log(`There are ${this.optionScores.length} optionScores`);
-    this.numTiers++;
+    if (this.numTiers < this.maxTiers) {
+      this.numTiers++;
+    }
     console.log(`Array with ${this.numTiers} tiers`);
     const newTiersArray = new Array<OptionScore[]>(this.numTiers);
     this.optionScores.sort((a, b) => (a.score > b.score ? 1 : -1));
@@ -132,21 +135,11 @@ export class AdvancedRanker extends Ranker {
     console.log('*******');
   }
 
-  // Two parts to the completeness score:
-  // 1. Pct of tiers created. if we have 4/10 tiers created, that's 40%.
-  // 2. The smaller increment is number of ranks in between tier creation.
-  //    If we create a new tier every 20 ranks and 15 have been done, that's 7.5% extra
   calculateCompletenessScore() {
-    const pctTiersCreated = ((this.numTiers - 1) / this.maxTiers) * 100;
-    const smallerIncrement =
-      ((this.totalRanks % this.numToTierUpgrade) /
-        this.numToTierUpgrade /
-        this.maxTiers) *
-      100;
-    console.log(
-      `Calculated score. pctTier: ${pctTiersCreated}, smallerIncrement: ${smallerIncrement}`
-    );
-    return Math.round((pctTiersCreated + smallerIncrement) * 10) / 10;
+    const goalRanks = this.maxTiers * this.numToTierUpgrade;
+    console.log(`Calculating completeness: ${this.totalRanks} / ${goalRanks}`);
+    this.completeness = Math.round((this.totalRanks / goalRanks) * 1000) / 10;
+    return this.completeness;
   }
 
   chooseDisplayOptions(_numOptions: number): OptionScore[] {
@@ -244,6 +237,6 @@ export class AdvancedRanker extends Ranker {
 
   // done when min(10, numOptions) tiers
   checkIfDone(): boolean {
-    return this.numTiers >= this.maxTiers;
+    return this.completeness >= 100;
   }
 }

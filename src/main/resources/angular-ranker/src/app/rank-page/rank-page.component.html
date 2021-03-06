@@ -66,6 +66,13 @@
     >
       Save Progess and Exit
     </button>
+    <button
+      *ngIf="undoAvailable()"
+      class="btn vertical-margin btn-primary"
+      (click)="undo()"
+    >
+      Undo
+    </button>
     <div class="row padding d-flex flex-wrap">
       <div
         *ngFor="let optionScore of displayOptions"
@@ -90,6 +97,13 @@
         <p>All done!</p>
         <button class="btn btn-primary" (click)="saveAndSeeResults()">
           Save and see results
+        </button>
+        <br />
+        <button
+          class="btn btn-primary vertical-margin"
+          (click)="continueRanking()"
+        >
+          Continue Ranking
         </button>
       </div>
     </div>
