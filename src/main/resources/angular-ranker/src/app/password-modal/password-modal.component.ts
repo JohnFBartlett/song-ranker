@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { RankSession } from '../models/rankSession';
-import { HeroService } from '../services/hero.service';
 
 @Component({
   selector: 'app-password-modal',

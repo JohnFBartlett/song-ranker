@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OptionScore } from '../models/optionScore';
 import { RankSession } from '../models/rankSession';
-import { HeroService } from '../services/hero.service';
+import { BackendService } from '../services/backend.service';
 
 @Component({
   selector: 'app-rank-results',
@@ -16,7 +16,7 @@ export class RankResultsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private heroService: HeroService
+    private backendService: BackendService
   ) {}
 
   ngOnInit(): void {
@@ -26,7 +26,7 @@ export class RankResultsComponent implements OnInit {
   getRankSession(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.heroService.getRankSession(+id).subscribe((rankSession) => {
+      this.backendService.getRankSession(+id).subscribe((rankSession) => {
         this.rankSession = rankSession;
         this.optionScores = rankSession.optionScores;
       });

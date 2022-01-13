@@ -1,4 +1,3 @@
-import { ThisReceiver } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -6,7 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Category } from '../models/category';
 import { RankSession } from '../models/rankSession';
 import { RequestPasswordModalComponent } from '../request-password-modal/request-password-modal.component';
-import { HeroService } from '../services/hero.service';
+import { BackendService } from '../services/backend.service';
 
 @Component({
   selector: 'app-category-summary',
@@ -27,14 +26,14 @@ export class CategorySummaryComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private heroService: HeroService,
+    private backendService: BackendService,
     private modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.heroService.getCategory(+id).subscribe((category) => {
+      this.backendService.getCategory(+id).subscribe((category) => {
         this.category = category;
         this.getRankSessions();
       });
@@ -81,7 +80,7 @@ export class CategorySummaryComponent implements OnInit {
   }
 
   async deleteRankSession(rankSession: RankSession) {
-    await this.heroService.deleteRankSession(rankSession.id!).toPromise();
+    await this.backendService.deleteRankSession(rankSession.id!).toPromise();
     window.location.reload();
   }
 
@@ -89,7 +88,7 @@ export class CategorySummaryComponent implements OnInit {
     console.log(
       `getting rank sessions for category with id ${this.category.id}`
     );
-    this.heroService
+    this.backendService
       .getRankSessionsForCategory(this.category.id!)
       .subscribe((rankSessions) => {
         this.rankSessions = rankSessions;

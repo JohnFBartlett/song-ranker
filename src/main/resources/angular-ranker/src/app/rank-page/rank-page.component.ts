@@ -1,4 +1,3 @@
-import { ThisReceiver } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -6,7 +5,7 @@ import { Category } from '../models/category';
 import { Option } from '../models/option';
 import { OptionScore } from '../models/optionScore';
 import { RankSession } from '../models/rankSession';
-import { HeroService } from '../services/hero.service';
+import { BackendService } from '../services/backend.service';
 import { SpotifyService } from '../services/spotify-service.service';
 import { AdvancedRanker } from '../strategies/advancedRanker';
 import { BasicRanker } from '../strategies/basicRanker';
@@ -41,7 +40,7 @@ export class RankPageComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private heroService: HeroService,
+    private backendService: BackendService,
     private spotifyService: SpotifyService,
     private modalService: NgbModal
   ) {}
@@ -61,16 +60,15 @@ export class RankPageComponent implements OnInit {
     const rankerName = this.route.snapshot.queryParamMap.get('ranker');
     const algorithm =
       this.route.snapshot.queryParamMap.get('algorithm') || 'advanced';
-    const rankSessionId = this.route.snapshot.queryParamMap.get(
-      'rankSessionId'
-    );
+    const rankSessionId =
+      this.route.snapshot.queryParamMap.get('rankSessionId');
     console.log(`Ranker name: ${rankerName}`);
     if (id) {
-      this.category = await this.heroService.getCategory(+id).toPromise();
+      this.category = await this.backendService.getCategory(+id).toPromise();
       this.options = this.category.options;
 
       if (rankSessionId) {
-        this.rankSession = await this.heroService
+        this.rankSession = await this.backendService
           .getRankSession(+rankSessionId)
           .toPromise();
         if (algorithm) {
@@ -157,7 +155,8 @@ export class RankPageComponent implements OnInit {
     });
     this.rankerAlg!.choicePicked(winner, loser);
     this.rankSession!.numRanks++;
-    this.rankSession!.completenessScore = this.rankerAlg!.calculateCompletenessScore();
+    this.rankSession!.completenessScore =
+      this.rankerAlg!.calculateCompletenessScore();
     if (!this.rankSession?.extendedRank && this.rankerAlg!.checkIfDone()) {
       // Display finish button
       this.finishedRanking = true;
@@ -174,7 +173,7 @@ export class RankPageComponent implements OnInit {
 
       // don't need to wait for this call
       // just saves that we want to keep going
-      this.heroService.submitRankSession(this.rankSession);
+      this.backendService.submitRankSession(this.rankSession);
     }
     this.chooseDisplayOptions(this.NUM_DISPLAY_OPTIONS);
   }
@@ -182,7 +181,7 @@ export class RankPageComponent implements OnInit {
   async openModal(content: any): Promise<void> {
     // don't open modal if session already has a password
     if (this.rankSession?.password) {
-      await this.heroService.submitRankSession(this.rankSession).toPromise();
+      await this.backendService.submitRankSession(this.rankSession).toPromise();
       this.toCategorySummary();
     } else {
       this.modalService
@@ -196,7 +195,7 @@ export class RankPageComponent implements OnInit {
               console.log(`saving password: ${password}`);
               this.rankSession.password = btoa(password);
               console.log(`converted password: ${password}`);
-              await this.heroService
+              await this.backendService
                 .submitRankSession(this.rankSession)
                 .toPromise();
               this.toCategorySummary();
@@ -217,7 +216,7 @@ export class RankPageComponent implements OnInit {
 
   async saveAndSeeResults() {
     // save results
-    this.rankSession = await this.heroService
+    this.rankSession = await this.backendService
       .submitRankSession(this.rankSession!)
       .toPromise();
 

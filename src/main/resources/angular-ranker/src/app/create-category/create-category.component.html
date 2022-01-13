@@ -7,6 +7,20 @@
   </div>
 
   <div class="row">
+    <label
+      >Songs?:
+      <input type="checkbox" [checked]="isSongs" (click)="isSongs = !isSongs" />
+    </label>
+  </div>
+
+  <div *ngIf="isSongs" class="row">
+    <label
+      >Artist:
+      <input [ngModel]="artist" />
+    </label>
+  </div>
+
+  <div class="row">
     <label>All options (one per line): </label>
     <textarea autosize #optionString cols="70"></textarea>
   </div>

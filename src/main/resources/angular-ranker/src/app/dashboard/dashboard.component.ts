@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Category } from '../models/category';
-import { Option } from '../models/option';
-import { HeroService } from '../services/hero.service';
+import { BackendService } from '../services/backend.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,14 +10,14 @@ import { HeroService } from '../services/hero.service';
 export class DashboardComponent implements OnInit {
   categories: Category[] = [];
 
-  constructor(private heroService: HeroService) {}
+  constructor(private backendService: BackendService) {}
 
   ngOnInit() {
     this.getCategories();
   }
 
   getCategories(): void {
-    this.heroService.getCategories().subscribe((categories) => {
+    this.backendService.getCategories().subscribe((categories) => {
       console.log(categories);
       this.categories = categories.slice(0, 4);
     });
