@@ -39,3 +39,12 @@ ng serve
 ```
 
 The app will run on port 4200 and look for a backend connection on port 9001.
+
+# Spotify Credentials
+
+If you want the option cards in the Ranker app to show playback windows from Spotify, you need to get client credentials from Spotify and add them to the `spotify_credentials` table. I use client credentials instead of an Authorization code strategy because it allows us access to enough Spotify features without having to gain access to a user's account.
+
+You can get Spotify credentials by following this guide (you don't need to add callback urls or anything): https://developer.spotify.com/documentation/general/guides/authorization/app-settings/
+
+Once the credentials have been added to the `spotify_credentials` table you're good to go, but this page explains the authentication story if you're interested.
+https://developer.spotify.com/documentation/general/guides/authorization/client-credentials/

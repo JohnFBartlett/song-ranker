@@ -50,22 +50,6 @@ public class CredentialsController {
 	final static String DELETE_SUCCESS = "Successfully deleted data from the DB";
 	final static String DELETE_FAIL = "Failed to delete data from the DB";
 	
-	private String delete_success(long id) {
-		return String.format("Successfully deleted rank session %d from the DB", id);
-	}
-	
-	private String delete_not_found(long id) {
-		return String.format("Could not find rank session %d to delete", id);
-	}
-	
-	private String nothing_found() {
-		return "Could not find any rank sessions to delete";
-	}
-	
-	private String delete_failed(long id) {
-		return String.format("Could not delete rank session %d from the DB", id);
-	}
-	
 	public enum FailReasons {
 		FORMAT_ERROR
 	}
