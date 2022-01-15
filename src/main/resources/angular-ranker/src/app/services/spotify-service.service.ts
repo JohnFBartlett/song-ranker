@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import SpotifyWebApi from 'spotify-web-api-js';
@@ -14,8 +14,8 @@ import { SongSearch } from '../models/songSearch';
 export class SpotifyService {
   spotifyApi: SpotifyWebApi.SpotifyWebApiJs;
 
-  // private credsUrl = 'http://localhost:9001/credentials';
-  private credsUrl = '/credentials';
+  private credsUrl = 'http://localhost:9001/credentials';
+  // private credsUrl = '/credentials';
   private spotifyTokenUrl = 'https://accounts.spotify.com/api/token';
   private spotifySearchUrl = 'https://api.spotify.com/v1/search/';
 
