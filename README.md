@@ -1,4 +1,4 @@
-# Stuff Ranker
+# Song Ranker
 
 This app was made to help people rank stuff, especially songs by a given artist.
 
