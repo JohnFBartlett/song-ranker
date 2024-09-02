@@ -22,10 +22,13 @@ export class PlaybackWindowComponent implements OnInit {
   }
 
   async computeSongUrl(): Promise<void> {
+    console.log("Computing song URL")
     const song: Song = await this.spotifyService.getSong(
       this.song,
       this.artist
     );
+
+    console.log(`response: ${song.name}, ${song.name}`)
 
     this.songUrl = `https://open.spotify.com/embed/track/${song.id}`;
   }

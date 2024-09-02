@@ -84,7 +84,7 @@
           (click)="selectOption(optionScore)"
         >
           <h4 class="bottom-padding">{{ optionScore.option.name }}</h4>
-          <div *ngIf="category.type == 'songs'">
+          <div *ngIf="category.type == 'song'">
             <app-playback-window
               [song]="optionScore.option.name"
               [artist]="optionScore.option.artist || ''"

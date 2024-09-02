@@ -128,11 +128,11 @@ export class AdvancedRanker extends Ranker {
 
   printTiers() {
     console.log('*******');
-    for (let i = this.tiersArray.length - 1; i >= 0; i--) {
-      let options = this.tiersArray[i];
-      console.log(this.tierString(i, options, true));
-    }
-    console.log('*******');
+    // for (let i = this.tiersArray.length - 1; i >= 0; i--) {
+    //   let options = this.tiersArray[i];
+    //   console.log(this.tierString(i, options, true));
+    // }
+    // console.log('*******');
   }
 
   calculateCompletenessScore() {
@@ -183,7 +183,7 @@ export class AdvancedRanker extends Ranker {
       secondOption = this.getOptionFromTier(firstOption, tier);
       if (secondOption == null) {
         tierOptions.splice(choiceIndexIndex, 1);
-        if (tierOptions == []) {
+        if (tierOptions.length === 0) {
           throw new Error('No other options to pick!');
         }
       }
@@ -215,7 +215,7 @@ export class AdvancedRanker extends Ranker {
       );
       tier.splice(tierIndex, 1);
       console.log(`new spliced tier: ${this.tierString(tierIndex, tier)}`);
-      if (tier == []) {
+      if (tier.length === 0) {
         console.log('[getOptionFromTier] No more options in this tier');
         return null;
       }
