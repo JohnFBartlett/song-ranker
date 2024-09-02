@@ -118,5 +118,7 @@
       }
     }
   },
-  "defaultProject": "angular-ranker"
+  "cli": {
+    "analytics": false
+  }
 }

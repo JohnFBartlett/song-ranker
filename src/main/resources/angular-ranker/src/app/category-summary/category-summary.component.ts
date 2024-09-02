@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Category } from '../data/models/category';
@@ -18,9 +18,9 @@ export class CategorySummaryComponent implements OnInit {
     options: [],
   };
   rankSessions: RankSession[] = [];
-  form = new FormGroup({
-    rankerName: new FormControl(''),
-    algorithm: new FormControl('advanced'),
+  form = new UntypedFormGroup({
+    rankerName: new UntypedFormControl(''),
+    algorithm: new UntypedFormControl('advanced'),
   });
 
   constructor(
