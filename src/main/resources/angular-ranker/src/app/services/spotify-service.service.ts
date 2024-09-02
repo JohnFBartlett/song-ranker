@@ -3,10 +3,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import SpotifyWebApi from 'spotify-web-api-js';
-import { Credentials } from '../models/credentials';
-import { Song } from '../models/song';
-import { Token } from '../models/token';
-import { SongSearch } from '../models/songSearch';
+import { Credentials } from '../data/models/credentials';
+import { Song } from '../data/models/song';
+import { Token } from '../data/models/token';
+import { SongSearch } from '../data/models/songSearch';
 
 @Injectable({
   providedIn: 'root',

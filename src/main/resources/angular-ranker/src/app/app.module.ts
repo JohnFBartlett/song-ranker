@@ -10,14 +10,15 @@ import { CreateCategoryComponent } from './create-category/create-category.compo
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RankPageComponent } from './rank-page/rank-page.component';
 import { RankResultsComponent } from './rank-results/rank-results.component';
-import { ArraySortByPipe } from './pipes/SortBy';
+import { ArraySortByPipe } from './strategies/pipes/SortBy';
 import { AutosizeModule } from 'ngx-autosize';
 import { CategorySummaryComponent } from './category-summary/category-summary.component';
-import { ArraySortByReversePipe } from './pipes/SortByReverse';
+import { ArraySortByReversePipe } from './strategies/pipes/SortByReverse';
 import { PlaybackWindowComponent } from './playback-window/playback-window.component';
-import { SafePipe } from './pipes/Safe';
+import { SafePipe } from './strategies/pipes/Safe';
 import { PasswordModalComponent } from './password-modal/password-modal.component';
 import { RequestPasswordModalComponent } from './request-password-modal/request-password-modal.component';
+import { SiteHeaderComponent } from './site-header/site-header.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { RequestPasswordModalComponent } from './request-password-modal/request-
     PlaybackWindowComponent,
     PasswordModalComponent,
     RequestPasswordModalComponent,
+    SiteHeaderComponent,
   ],
   imports: [
     BrowserModule,

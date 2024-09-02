@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { RankSession } from '../models/rankSession';
+import { RankSession } from '../data/models/rankSession';
 
 @Component({
   selector: 'app-password-modal',

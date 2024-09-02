@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Category } from '../models/category';
-import { Option } from '../models/option';
-import { OptionScore } from '../models/optionScore';
-import { RankSession } from '../models/rankSession';
+import { Category } from '../data/models/category';
+import { Option } from '../data/models/option';
+import { OptionScore } from '../data/models/optionScore';
+import { RankSession } from '../data/models/rankSession';
 import { BackendService } from '../services/backend.service';
 import { SpotifyService } from '../services/spotify-service.service';
 import { AdvancedRanker } from '../strategies/advancedRanker';

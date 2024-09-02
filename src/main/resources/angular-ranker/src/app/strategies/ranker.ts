@@ -1,4 +1,4 @@
-import { OptionScore } from '../models/optionScore';
+import { OptionScore } from '../data/models/optionScore';
 
 export abstract class Ranker {
   abstract name: string;

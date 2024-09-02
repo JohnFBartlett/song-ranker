@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { OptionScore } from '../models/optionScore';
-import { RankSession } from '../models/rankSession';
+import { OptionScore } from '../data/models/optionScore';
+import { RankSession } from '../data/models/rankSession';
 import { BackendService } from '../services/backend.service';
 
 @Component({

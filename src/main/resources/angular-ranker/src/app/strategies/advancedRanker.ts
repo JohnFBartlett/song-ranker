@@ -1,7 +1,7 @@
 import { first } from 'rxjs/operators';
-import { Option } from '../models/option';
-import { OptionScore } from '../models/optionScore';
-import { RankSession } from '../models/rankSession';
+import { Option } from '../data/models/option';
+import { OptionScore } from '../data/models/optionScore';
+import { RankSession } from '../data/models/rankSession';
 import { Ranker } from './ranker';
 
 interface ActiveChoice {

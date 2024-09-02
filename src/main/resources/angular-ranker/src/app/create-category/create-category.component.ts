@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BackendService } from '../services/backend.service';
-import { Category } from '../models/category';
-import { Option } from '../models/option';
+import { Category } from '../data/models/category';
+import { Option } from '../data/models/option';
 import { Router } from '@angular/router';
 
 @Component({

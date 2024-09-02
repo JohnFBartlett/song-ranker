@@ -3,9 +3,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
-import { Option } from '../models/option';
-import { Category } from '../models/category';
-import { RankSession } from '../models/rankSession';
+import { Option } from '../data/models/option';
+import { Category } from '../data/models/category';
+import { RankSession } from '../data/models/rankSession';
 
 @Injectable({
   providedIn: 'root',

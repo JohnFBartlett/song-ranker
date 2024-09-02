@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Category } from '../models/category';
+import { Category } from '../data/models/category';
 import { BackendService } from '../services/backend.service';
 
 @Component({

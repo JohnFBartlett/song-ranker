@@ -1,5 +1,5 @@
-import { OptionScore } from '../models/optionScore';
-import { RankSession } from '../models/rankSession';
+import { OptionScore } from '../data/models/optionScore';
+import { RankSession } from '../data/models/rankSession';
 import { Ranker } from './ranker';
 
 export class BasicRanker extends Ranker {

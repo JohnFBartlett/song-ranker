@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Category } from '../models/category';
-import { RankSession } from '../models/rankSession';
+import { Category } from '../data/models/category';
+import { RankSession } from '../data/models/rankSession';
 import { RequestPasswordModalComponent } from '../request-password-modal/request-password-modal.component';
 import { BackendService } from '../services/backend.service';
 
