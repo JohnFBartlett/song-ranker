@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { SpotifyApi } from '@spotify/web-api-ts-sdk';
 import { Credentials } from '../data/models/credentials';
 import { Song } from '../data/models/song';
 import { Token } from '../data/models/token';
@@ -23,7 +22,6 @@ export class SpotifyService {
   private nextCheck: number = Date.now();
 
   constructor(private http: HttpClient) {
-    // this.spotifyApi = new SpotifyWebApi();
   }
 
   /**
