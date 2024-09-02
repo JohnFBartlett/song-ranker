@@ -2,9 +2,6 @@ package project.ranker.objects;
 
 import java.util.List;
 
-import lombok.Data;
-
-@Data
 public class DataResponse {
 
 	private String responseStatus;

@@ -31,7 +31,7 @@ public class RankerApplication {
 		SpringApplication.run(RankerApplication.class, args);
 	}
 	
-	// Bootstrap some test data into the in-memory database
+	// Uncomment to populate some test data into the local database
 //    @Bean
 //    ApplicationRunner init(
 //    		CategoryRepository categoryRepository,
@@ -39,21 +39,21 @@ public class RankerApplication {
 //    		) {
 //    	Category category = new Category();
 //        category.setName("TestCategory");
-//        
+//
 //        categoryRepository.save(category);
 //        return args -> {
 //            Stream.of("FirstOption", "SecondOption", "ThirdOption", "FourthOption")
 //            .forEach(name -> {
-//                    
-//                    
+//
+//
 //                    Option option = new Option();
 //                    option.setCategory(category);
 //                    option.setName(name);
 //                    optionRepository.save(option);
-//            });  
-//            optionRepository.findAll().forEach(System.out::println);  
-//        };  
-//    }  
+//            });
+//            optionRepository.findAll().forEach(System.out::println);
+//        };
+//    }
 
     // Fix the CORS errors
     @Bean
@@ -62,31 +62,31 @@ public class RankerApplication {
         CorsConfiguration config = new CorsConfiguration();  
         config.setAllowCredentials(true); 
         // *** URL below needs to match the Vue client URL and port ***
-//        List<String> allowedOrigins = new ArrayList<String>(
-//        		Arrays.asList(
-//        				"http://localhost",
-//        				"https://localhost",
-//        				"http://localhost:8080",
-//        				"http://127.0.0.1:8080",
-//        				"http://localhost:4200",
-//        				"http://127.0.0.1:4200",
-//        				"http://localhost:80",
-//        				"http://127.0.0.1:80",
-//        				"http://localhost:443",
-//        				"http://127.0.0.1:443",
-//        				"https://localhost:443",
-//        				"https://127.0.0.1:443",
-//        				"http://watermap.io",
-//        				"https://watermap.io",
-//        				"http://73.38.255.81",
-//        				"https://73.38.255.81"
-//        				)
-//        );
         List<String> allowedOrigins = new ArrayList<String>(
         		Arrays.asList(
-        				"*"
+        				"http://localhost",
+        				"https://localhost",
+        				"http://localhost:8080",
+        				"http://127.0.0.1:8080",
+        				"http://localhost:4200",
+        				"http://127.0.0.1:4200",
+        				"http://localhost:80",
+        				"http://127.0.0.1:80",
+        				"http://localhost:443",
+        				"http://127.0.0.1:443",
+        				"https://localhost:443",
+        				"https://127.0.0.1:443",
+        				"http://watermap.io",
+        				"https://watermap.io",
+        				"http://73.38.255.81",
+        				"https://73.38.255.81"
         				)
         );
+//        List<String> allowedOrigins = new ArrayList<String>(
+//        		Arrays.asList(
+//        				"*"
+//        				)
+//        );
         config.setAllowedOrigins(Collections.unmodifiableList(allowedOrigins)); 
         config.setAllowedMethods(Collections.singletonList("*"));  
         config.setAllowedHeaders(Collections.singletonList("*"));  
