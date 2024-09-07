@@ -1,3 +1,23 @@
+import { HttpContext, HttpHeaders, HttpParams } from "@angular/common/http";
+
+export type ParamType = HttpParams | {
+  [param: string]: string | number | boolean | ReadonlyArray<string | number | boolean>;
+};
+
+export interface SearchRequest {
+    headers?: HttpHeaders | {
+        [header: string]: string | string[];
+    };
+    context?: HttpContext;
+    observe?: "body";
+    params?: HttpParams | {
+        [param: string]: string | number | boolean | ReadonlyArray<string | number | boolean>;
+    };
+    reportProgress?: boolean;
+    responseType?: "json";
+    withCredentials?: boolean;
+}
+
 interface SongItem {
   external_urls: any;
   genres: string[];
@@ -11,13 +31,19 @@ interface SongItem {
   artists: Artist[];
 }
 
-interface Artist {
+export interface Artist {
   external_urls: any;
   href: string;
   id: string;
   name: string;
   type: string;
   uri: string;
+}
+
+export interface Album {
+  id: string;
+  name: string;
+  type: string;
 }
 
 export interface SongSearch {
@@ -31,3 +57,18 @@ export interface SongSearch {
     total?: number;
   };
 }
+
+export interface ArtistSearch {
+  artists: {
+    items: Artist[]
+  }
+}
+
+export interface ArtistAlbumSearch {
+  items: Album[]
+}
+
+export interface AlbumTracksSearch {
+  items: SongItem[]
+}
+

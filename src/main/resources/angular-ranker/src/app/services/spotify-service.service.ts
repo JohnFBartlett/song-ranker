@@ -1,11 +1,19 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { Credentials } from '../data/models/credentials';
 import { Song } from '../data/models/song';
 import { Token } from '../data/models/token';
-import { SongSearch } from '../data/models/songSearch';
+import { Album, AlbumTracksSearch, Artist, ArtistAlbumSearch, ArtistSearch, ParamType, SearchRequest, SongSearch } from '../data/models/songSearch';
+import { filterSongsByName } from '../utils/utils';
+
+const TAYLOR_REJECTED_ALBUMS = [
+ "Fearless",
+ "Speak Now",
+ "Red",
+ "1989"
+]
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +22,7 @@ export class SpotifyService {
 
   private credsUrl = 'http://localhost:9001/credentials';
   // private credsUrl = '/credentials';
+  private baseSpotifyUrl = 'https://api.spotify.com/v1';
   private spotifyTokenUrl = 'https://accounts.spotify.com/api/token';
   private spotifySearchUrl = 'https://api.spotify.com/v1/search/';
 
@@ -103,29 +112,114 @@ export class SpotifyService {
     }
   }
 
-  async getSong(songName: string, artist: string): Promise<Song> {
-    console.log(`Trying to get song for artist.\nSong: ${songName}\nArtist: ${artist}`);
+  async makeParams(params: ParamType): Promise<SearchRequest | null> {
     const token = await this.getToken();
 
     if (!token) {
-      return {
-        name: 'Not found',
-        id: 'Not found',
-      };
+      return null;
     } else {
       console.log("Retrieved token.")
     }
 
-    const requestOptions = {
+    return {
       headers: new HttpHeaders({
         Authorization: `Bearer ${token.access_token}`,
       }),
-      params: {
-        q: songName,
-        type: 'track',
-        market: 'US',
-      },
+      params: params,
     };
+  }
+
+  async searchSongsByArtist(artistName: string): Promise<Song[]> {
+    // Get artist ID
+    const artistResult = await this.getArtist(artistName);
+    if (!artistResult) {
+      console.log("Couldn't find the artist");
+      return [];
+    }
+    console.log(`Got artist result: ${artistResult.name} (${artistResult.id})`)
+
+    // Get albums by artist
+    const albums = await this.getAlbumsForArtist(artistResult.id);
+    console.log(`Got albums: ${albums.map(album => album.name).join(',')}`)
+
+    // Get songs for albums
+    const songs = await this.getAlbumSongs(albums.map(album => album.id));
+    console.log(`Found ${songs.length} songs`)
+
+    return songs;
+  }
+
+  async getArtist(artistName: string): Promise<Artist|undefined> {
+    const params = await this.makeParams({q: artistName, type: "artist"})
+    if (!params) {
+      return undefined;
+    }
+    const searchResult = await this.http
+      .get<ArtistSearch>(this.spotifySearchUrl, params)
+      .toPromise();
+    console.log(`artist search result: ${JSON.stringify(searchResult)}`)
+
+    return searchResult.artists.items.find(artist => artist.name.toLowerCase() === artistName.toLowerCase())
+  }
+
+  async getAlbumsForArtist(artistId: string): Promise<Album[]> {
+    const url = `${this.baseSpotifyUrl}/artists/${artistId}/albums`
+    const params = await this.makeParams({include_groups: ['album', 'single']})
+    if (!params) {
+      return [];
+    }
+
+    const searchResult = await this.http
+      .get<ArtistAlbumSearch>(url, params)
+      .toPromise();
+
+    return this.taylorFilter(searchResult.items);
+  }
+
+  taylorFilter(albums: Album[]): Album[] {
+    return albums.filter(album => 
+      !TAYLOR_REJECTED_ALBUMS.includes(album.name)
+    )
+  }
+
+  async getAlbumSongs(albumIds: string[]): Promise<Song[]> {
+    const songs: Song[] = [];
+    for (const albumId of albumIds) {
+      const url = `${this.baseSpotifyUrl}/albums/${albumId}/tracks`
+      const params = await this.makeParams({include_groups: ['album', 'single']})
+      if (params) {
+        const searchResult = await this.http
+        .get<AlbumTracksSearch>(url, params)
+        .toPromise();
+
+        const songItems = searchResult.items.map((songItem) => {
+          return {name: songItem.name, id: songItem.id}
+        })
+        console.log(`Songs returned: ${JSON.stringify(songItems)}`)
+
+        songs.push(...songItems)
+      }
+    }
+    console.log(`Got ${songs.length} songs`)
+
+    return filterSongsByName(songs);
+  }
+
+  async getSong(songName: string, artist: string): Promise<Song> {
+    console.log(`Trying to get song for artist.\nSong: ${songName}\nArtist: ${artist}`);
+
+    const requestOptions = await this.makeParams({
+      q: songName,
+      type: 'track',
+      market: 'US',
+    })
+    if (!requestOptions) {
+      return {
+        name: 'Not found',
+        id: 'Not found',
+      };
+    }
+
     const results = await this.http
       .get<SongSearch>(this.spotifySearchUrl, requestOptions)
       .toPromise();
