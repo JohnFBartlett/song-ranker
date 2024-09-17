@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { BackendService } from '../services/backend.service';
-import { Category } from '../data/models/category';
-import { Option } from '../data/models/option';
+import { BackendService } from '../../services/backend.service';
+import { Category } from '../../data/models/category';
+import { Option } from '../../data/models/option';
 import { Router } from '@angular/router';
-import { SpotifyService } from '../services/spotify-service.service';
-import { delay } from '../utils/utils';
+import { SpotifyService } from '../../services/spotify-service.service';
+import { delay } from '../../utils/utils';
 
 @Component({
   selector: 'app-create-category',
   templateUrl: './create-category.component.html',
-  styleUrls: ['./create-category.component.css'],
+  styleUrls: ['../../../styles/compiled-tailwind.css'],
 })
 export class CreateCategoryComponent implements OnInit {
   constructor(private backendService: BackendService, private spotifyService: SpotifyService, private router: Router) {}

@@ -1,0 +1,4 @@
+.bg-theme-primary {
+  --tw-bg-opacity: 1;
+  background-color: rgb(135 237 242 / var(--tw-bg-opacity));
+}

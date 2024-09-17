@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { OptionScore } from '../data/models/optionScore';
-import { RankSession } from '../data/models/rankSession';
-import { BackendService } from '../services/backend.service';
+import { OptionScore } from '../../data/models/optionScore';
+import { RankSession } from '../../data/models/rankSession';
+import { BackendService } from '../../services/backend.service';
 
 @Component({
   selector: 'app-rank-results',

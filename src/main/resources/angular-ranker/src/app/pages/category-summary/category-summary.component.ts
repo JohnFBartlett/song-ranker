@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Category } from '../data/models/category';
-import { RankSession } from '../data/models/rankSession';
-import { RequestPasswordModalComponent } from '../request-password-modal/request-password-modal.component';
-import { BackendService } from '../services/backend.service';
+import { Category } from '../../data/models/category';
+import { RankSession } from '../../data/models/rankSession';
+import { RequestPasswordModalComponent } from '../../components/request-password-modal/request-password-modal.component';
+import { BackendService } from '../../services/backend.service';
 
 @Component({
   selector: 'app-category-summary',

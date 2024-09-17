@@ -10,11 +10,11 @@ h3 {
   border-left: 10px solid teal;
   border-bottom: 5px solid teal;
   margin-bottom: 4%;
-  background-color: aqua;
+  background-color: #87EDF2;
 }
 
 .secondary-background {
-  background-color: rgb(186, 245, 245);
+  background-color: #87EDF2;
   border-left: 2px solid teal;
   border-bottom: 8px solid teal;
 }

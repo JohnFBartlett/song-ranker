@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "makestyle": "postcss src/tailwind.css -o src/app/create-category/create-category.component.css",
+    "makestyle": "postcss src/tailwind.css -o src/styles/compiled-tailwind.css",
     "build": "npm run makestyle && ng build",
     "test": "ng test",
     "lint": "ng lint",

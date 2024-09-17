@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DashboardComponent } from '../dashboard/dashboard.component';
-import { CreateCategoryComponent } from '../create-category/create-category.component';
-import { RankPageComponent } from '../rank-page/rank-page.component';
-import { RankResultsComponent } from '../rank-results/rank-results.component';
-import { CategorySummaryComponent } from '../category-summary/category-summary.component';
+import { DashboardComponent } from '../pages/dashboard/dashboard.component';
+import { CreateCategoryComponent } from '../pages/create-category/create-category.component';
+import { RankPageComponent } from '../pages/rank-page/rank-page.component';
+import { RankResultsComponent } from '../pages/rank-results/rank-results.component';
+import { CategorySummaryComponent } from '../pages/category-summary/category-summary.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },

@@ -5,20 +5,20 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing/app-routing.module';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { CreateCategoryComponent } from './create-category/create-category.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { CreateCategoryComponent } from './pages/create-category/create-category.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { RankPageComponent } from './rank-page/rank-page.component';
-import { RankResultsComponent } from './rank-results/rank-results.component';
+import { RankPageComponent } from './pages/rank-page/rank-page.component';
+import { RankResultsComponent } from './pages/rank-results/rank-results.component';
 import { ArraySortByPipe } from './strategies/pipes/SortBy';
 import { AutosizeModule } from 'ngx-autosize';
-import { CategorySummaryComponent } from './category-summary/category-summary.component';
+import { CategorySummaryComponent } from './pages/category-summary/category-summary.component';
 import { ArraySortByReversePipe } from './strategies/pipes/SortByReverse';
-import { PlaybackWindowComponent } from './playback-window/playback-window.component';
+import { PlaybackWindowComponent } from './components/playback-window/playback-window.component';
 import { SafePipe } from './strategies/pipes/Safe';
-import { PasswordModalComponent } from './password-modal/password-modal.component';
-import { RequestPasswordModalComponent } from './request-password-modal/request-password-modal.component';
-import { SiteHeaderComponent } from './site-header/site-header.component';
+import { PasswordModalComponent } from './components/password-modal/password-modal.component';
+import { RequestPasswordModalComponent } from './components/request-password-modal/request-password-modal.component';
+import { SiteHeaderComponent } from './components/site-header/site-header.component';
 
 @NgModule({
   declarations: [

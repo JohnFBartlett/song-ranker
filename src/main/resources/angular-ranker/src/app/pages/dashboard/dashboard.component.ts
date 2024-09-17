@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Category } from '../data/models/category';
-import { BackendService } from '../services/backend.service';
+import { Category } from '../../data/models/category';
+import { BackendService } from '../../services/backend.service';
 
 @Component({
   selector: 'app-dashboard',

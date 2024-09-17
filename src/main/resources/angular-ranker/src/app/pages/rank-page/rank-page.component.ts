@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Category } from '../data/models/category';
-import { Option } from '../data/models/option';
-import { OptionScore } from '../data/models/optionScore';
-import { RankSession } from '../data/models/rankSession';
-import { BackendService } from '../services/backend.service';
-import { SpotifyService } from '../services/spotify-service.service';
-import { AdvancedRanker } from '../strategies/advancedRanker';
-import { BasicRanker } from '../strategies/basicRanker';
-import { Ranker } from '../strategies/ranker';
+import { Category } from '../../data/models/category';
+import { Option } from '../../data/models/option';
+import { OptionScore } from '../../data/models/optionScore';
+import { RankSession } from '../../data/models/rankSession';
+import { BackendService } from '../../services/backend.service';
+import { SpotifyService } from '../../services/spotify-service.service';
+import { AdvancedRanker } from '../../strategies/advancedRanker';
+import { BasicRanker } from '../../strategies/basicRanker';
+import { Ranker } from '../../strategies/ranker';
 
 @Component({
   selector: 'app-rank-page',
